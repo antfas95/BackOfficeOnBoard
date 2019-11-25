@@ -1,0 +1,78 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon name="arrow-back" (click)="goBack()" class = "freccia"></ion-icon>
+    <ion-icon name="person-add" (click)="goBack()" class = "freccia"></ion-icon>
+    <ion-label class = "intestazione">Registra un nuovo utente</ion-label>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card class = "cardcompleta">
+    <ion-card-header>
+       <ion-card-title color = "light" class = "centro">Dati registrazione</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item class = "margine">
+        <ion-label position = "floating">Codice Fiscale</ion-label>
+        <ion-input [(ngModel)]="codice_fiscale"></ion-input>
+      </ion-item>
+      <ion-item class = "margine">
+          <ion-label position = "floating">Nome</ion-label>
+          <ion-input [(ngModel)]="nome"></ion-input>
+      </ion-item>
+      <ion-item class = "margine">
+          <ion-label position = "floating">Cognome</ion-label>
+          <ion-input [(ngModel)]="cognome"></ion-input>
+      </ion-item>
+      <ion-radio-group [(ngModel)]="sesso">
+        <ion-list-header>
+          <ion-label color = "light">Sesso</ion-label>
+        </ion-list-header>
+        <ion-item>
+          <ion-label>Maschio</ion-label>
+          <ion-radio slot="start" value="maschio" checked></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Femmina</ion-label>
+          <ion-radio slot="start" value="femmina"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+      <ion-item class= "marginemod">
+        <ion-label>Città di nascita</ion-label>
+        <ion-select ok-text="Seleziona" cancel-text="Annulla" [(ngModel)]="cittanascita">
+          <ion-select-option value="napoli">Napoli</ion-select-option>
+          <ion-select-option value="avellino">Avellino</ion-select-option>
+          <ion-select-option value="nola">Nola</ion-select-option>
+          <ion-select-option value="milano">Milano</ion-select-option>
+          <ion-select-option value="roma">Roma</ion-select-option>
+          <ion-select-option value="sarno">Sarno</ion-select-option>
+          <ion-select-option value="cicciano">Cicciano</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+          <ion-label>Data di nascita</ion-label>
+          <ion-datetime [(ngModel)]="datanascita" value="1990-02-19" placeholder="Seleziona la data"></ion-datetime>
+        </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class = "cardcompleta">
+      <ion-card-header>
+         <ion-card-title color = "light" class = "centro">Credenziali d'accesso</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-item class = "margine">
+          <ion-label position = "floating">Username</ion-label>
+          <ion-input [(ngModel)]="username"></ion-input>
+        </ion-item>
+        <ion-item class = "margine">
+            <ion-label type = "password" position = "floating">Password</ion-label>
+            <ion-input [(ngModel)]="password"></ion-input>
+        </ion-item>
+        <ion-item class = "margine">
+            <ion-label type = "password" position = "floating">Conferma password</ion-label>
+            <ion-input [(ngModel)]="confirmpassword"></ion-input>
+        </ion-item>
+        <ion-button (click)= "registrati()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Registra nuovo utente</ion-button>
+        <ion-button (click)= "goBack()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Annulla</ion-button>
+      </ion-card-content>
+    </ion-card>
+</ion-content>

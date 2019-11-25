@@ -1,7 +1,6 @@
 .cardcompleta{
     background-color: cornflowerblue;
     vertical-align: top;
-    margin-top: 30vh;
     margin-bottom: 5vh;
     margin-right: 5vh;
     margin-left: 5vh;
@@ -14,4 +13,21 @@
 
 .margine{
     margin-bottom: 1ch;
+}
+
+.intestazione {
+    font-size: 3vh;
+    font-style: italic;
+    margin-left: 3vh;
+    color: blue;
+}
+
+.marginemod {
+    margin-bottom: 1ch;
+    margin-top: 1ch;
+}
+
+.freccia {
+    height: 6vh;
+    width: 6vh;
 }

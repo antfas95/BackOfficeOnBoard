@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon name="arrow-back" (click)="goBack()" class = "dash"></ion-icon>
+    <ion-icon name="trash" (click)="goBack()" class = "dash"></ion-icon>
+    <ion-label class = "intestazione">Elimina referente</ion-label>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card class = "cardcompleta">
+        <ion-grid>
+          <ion-row>
+            <ion-col col-md-6></ion-col>
+              <ion-icon horizontal = "center" name="trash" class = "immagine"></ion-icon>
+            <ion-col col-md-6></ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col col-md-4></ion-col>
+            <ion-col col-md-4>
+              <ion-searchbar placeholder = "ricerca referente"></ion-searchbar>
+            </ion-col>
+            <ion-col col-md-4></ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card>
+      <ion-grid class = "colonna1">
+      <ion-row>
+        <ion-col col-md-6></ion-col>
+        
+            <ion-col col-md-6 class = "colonna1">
+                <h1>Risultato della ricerca</h1>
+                <ion-list>
+                  <ion-item>
+                    <ion-avatar slot="start">
+                      <ion-icon class = "avatar" name="contact"></ion-icon>
+                     </ion-avatar>
+                    <ion-label>
+                      <h2>Nome Cognome</h2>
+                    </ion-label>
+                   </ion-item>
+                </ion-list>
+                <h1>Altre informazioni del referente</h1>
+                <p>Verranno inserite avrie informazioni inerenti a dati anagrafici del referente ricercato
+                  più la possibilità di verificare se ha già caricato i suoi documenti o meno.
+                </p>
+                <ion-button (click)= "elimnaReferente()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Conferma eliminazione</ion-button>
+              </ion-col>
+        <ion-col col-md-6></ion-col>
+      </ion-row>
+    </ion-grid>
+</ion-content>

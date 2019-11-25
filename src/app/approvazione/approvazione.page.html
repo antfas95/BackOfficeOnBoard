@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon name="arrow-back" (click)="goBack()" class = "dash"></ion-icon>
+    <ion-icon name="filing" (click)="goBack()" class = "dash"></ion-icon>
+    <ion-label class = "intestazione">Approva utente</ion-label>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+<ion-card class = "cardcompleta">
+  <h1>Documenti da approvare</h1>
+  <ion-grid>
+    <ion-row>
+      <ion-col col-md-6></ion-col>
+        <ion-icon horizontal = "center" name="filing" class = "immagine"></ion-icon>
+      <ion-col col-md-6></ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col col-md-4></ion-col>
+      <ion-col col-md-4>
+        <ion-list>
+          <ion-item>
+            <ion-avatar slot="start">
+                <ion-icon name="clipboard" class = "photo"></ion-icon>
+            </ion-avatar>
+            <ion-label>
+              <h2>Nome Cognome</h2>
+            </ion-label>
+            <ion-button color = "success">Approva</ion-button>
+            <ion-button color = "tertiary">Rigetta</ion-button>
+          </ion-item>
+          <ion-item>
+              <ion-avatar slot="start">
+                  <ion-icon name="image" class = "photo"></ion-icon>
+              </ion-avatar>
+              <ion-label>
+                <h2>Nome Cognome</h2>
+              </ion-label>
+              <ion-button color = "success">Approva</ion-button>
+              <ion-button color = "tertiary">Rigetta</ion-button>
+          </ion-item>
+          <ion-item>
+              <ion-avatar slot="start">
+                  <ion-icon name="image" class = "photo"></ion-icon>
+              </ion-avatar>
+              <ion-label>
+                <h2>Nome Cognome</h2>
+              </ion-label>
+              <ion-button color = "success">Approva</ion-button>
+              <ion-button color = "tertiary">Rigetta</ion-button>
+          </ion-item>
+        </ion-list>
+        <ion-button expand = "full" color = "tertiary" (click) = "goBack()">Torna Indietro</ion-button>
+      </ion-col>
+      <ion-col col-md-4></ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-card>
+</ion-content>

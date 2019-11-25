@@ -1,0 +1,69 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-icon name="arrow-back" (click)="goBack()" class = "dash"></ion-icon>
+      <ion-label class = "intestazione">View annunci</ion-label>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card class = "cardcompleta">
+        <ion-grid>
+            <ion-row>
+              <ion-col size = "4"></ion-col>
+              <ion-col size = "4">
+                  <ion-icon horizontal = "center" name="mail-open" class = "immagine"></ion-icon>
+              </ion-col>
+              <ion-col size = "4"></ion-col>
+            </ion-row>
+          </ion-grid>
+        <ion-card-header>
+           <ion-card-title color = "light" class = "centro">View Annunci</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-card class = "cardAnnuncio">
+            <ion-card-header>
+              <ion-card-title>Annuncio</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size = "2">
+                    <ion-img horizontal = "center" class = "immagine2" src="..\assets\img\exAnnuncui.jpg"></ion-img>
+                  </ion-col>
+                  <ion-col size = "8">
+                      <h1 class = "titolo"> Titolo dell' annuncio </h1>
+                      <p>Contenuto dell'annuncio</p>
+                  </ion-col>
+                  <ion-col size = "2">
+                    <ion-button (click) = "modificaAnnuncio()" expand = "full" color = "tertiary">Modifica Annuncio</ion-button>
+                    <ion-button (click) = "eliminaAnnunci()" expand = "full" color = "danger">Elimina Annuncio</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+          <ion-card class = "cardAnnuncio">
+              <ion-card-header>
+                <ion-card-title>Annuncio</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size = "2">
+                      <ion-img horizontal = "center" class = "immagine2" src="..\assets\img\exAnnuncui.jpg"></ion-img>
+                    </ion-col>
+                    <ion-col size = "8">
+                        <h1 class = "titolo"> Titolo dell' annuncio </h1>
+                        <p>Contenuto dell'annuncio</p>
+                    </ion-col>
+                    <ion-col size = "2">
+                      <ion-button (click) = "modificaAnnuncio()" expand = "full" color = "tertiary">Modifica Annuncio</ion-button>
+                      <ion-button (click) = "eliminaAnnunci()" expand = "full" color = "danger">Elimina Annuncio</ion-button>
+                    </ion-col>
+                  </ion-row>
+                </ion-grid>
+              </ion-card-content>
+            </ion-card>
+        </ion-card-content>
+      </ion-card>
+</ion-content>

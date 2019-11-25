@@ -1,0 +1,75 @@
+h1{
+    text-align: center;
+    font-style: italic;
+    font-size: 4vh;
+    margin-bottom: 3vh;
+    color: slateblue;
+}
+
+.dash {
+    height: 6vh;
+    width: 6vh;
+}
+
+.iconCards {
+    height: 15vh;
+    width: 15vh;
+    padding-left: 2vh;
+}
+
+.iconCards2 {
+    height: 15vh;
+    width: 15vh;
+    padding-left: 2vh;
+    position: center;
+}
+
+.divProva {
+    position: inherit;
+}
+
+.intestazione {
+    font-size: 3vh;
+    font-style: italic;
+    margin-left: 3vh;
+    color: blue;
+}
+
+.titolocards {
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    color: blueviolet;
+    font-size: 3vh;
+}
+
+.testoriga {
+    text-align: justify;
+}
+
+.stileCards {
+    background-color: skyblue;
+}
+
+.bottonecards {
+    margin-top: 4vh;
+}
+
+.immagine {
+    height: 50vh;
+    width: 50vh;
+    content: inherit;
+}
+
+.griglia {
+    background-color: darkgrey;
+}
+
+.parent {
+    background-color: black;
+    text-align: center;
+}
+
+.provaqui {
+    color: blue;
+    text-align: center;
+}

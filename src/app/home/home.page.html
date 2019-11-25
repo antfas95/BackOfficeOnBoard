@@ -1,14 +1,15 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <div class="ion-padding">
-    The world is your oyster.
-    <p>If you get lost, the <a target="_blank" rel="noopener" href="https://ionicframework.com/docs/">docs</a> will be your guide.</p>
-  </div>
-</ion-content>
+<ion-card class = "cardcompleta">
+  <ion-card-header>
+    <ion-card-title color = "light" class = "centro">Inserisci le tue credenziali</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item class = "margine">
+      <ion-input [(ngModel)]="user" placeholder = "Username"></ion-input>
+    </ion-item>
+    <ion-item class = "margine">
+      <ion-input [(ngModel)]="pass" placeholder = "Password" type = "password"></ion-input>
+    </ion-item>
+    <ion-button (click)= "effettuaLogin()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Log In</ion-button>
+    <ion-button (click)= "registrati()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Registrazione</ion-button>
+  </ion-card-content>
+</ion-card>

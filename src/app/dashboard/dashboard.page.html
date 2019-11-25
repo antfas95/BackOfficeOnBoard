@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon name="arrow-back" (click)="goback()" class = "dash"></ion-icon>
+    <ion-icon name="barcode" class = "dash"> Dashboard </ion-icon>
+    <ion-label class = "intestazione">Dashboard</ion-label>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size = "5"></ion-col>
+      <ion-col size = "2">
+        <ion-img class = "immagine" src="..\assets\img\Logo-hype2.png"></ion-img>
+      </ion-col>
+      <ion-col size = "5"></ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class = "griglia">
+      <h1>Da quest'area potrai avere accesso a tutte le tue funzionalità</h1>
+      <ion-row>
+        <ion-col size = "4">
+            <ion-card class = "stileCards">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size = "4"></ion-col>
+                  <ion-col size = "4"><ion-icon horizontal = "center" name="person-add" class = "iconCards"></ion-icon></ion-col>
+                  <ion-col size = "4"></ion-col>
+                </ion-row>
+              </ion-grid>
+                <ion-card-header>
+                  <ion-card-title class = "titolocards">Registrazione nuovo utente</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-row class = "testoriga">Grazie a questa funzionalità puoi inserire un nuovo utente che vuole lavorare con noi!!</ion-row>
+                  <ion-button (click) = "paginaRegistrazione()" class = "bottonecards" color = "success" expand = "full">Effettua Operazione</ion-button>
+                </ion-card-content>
+              </ion-card>
+        </ion-col>
+        <ion-col size = "4">
+          <ion-card class = "stileCards">
+            <ion-grid>
+              <ion-row>
+                <ion-col size = "4"></ion-col>
+                <ion-col size = "4"><ion-icon horizontal = "center" name="mail-open" class = "iconCards"></ion-icon></ion-col>
+                <ion-col size = "4"></ion-col>
+              </ion-row>
+            </ion-grid>
+            <ion-card-header>
+              <ion-card-title class = "titolocards">Inserisci nuovo annucio</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+              <ion-row class = "testoriga">Grazie a questa funzionalità puoi inserire nuovi annunci per tutti i nuovi aspiranti lavoratori.</ion-row>
+              <ion-button (click) = "paginaAnnuncio()" class = "bottonecards" color = "success" expand = "full">Effettua Operazione</ion-button>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+        <ion-col size = "4">
+            <ion-card class = "stileCards">
+              <ion-grid>
+                <ion-row>
+                  <ion-col size = "4"></ion-col>
+                  <ion-col size = "4"><ion-icon horizontal = "center" name="clock" class = "iconCards"></ion-icon></ion-col>
+                  <ion-col size = "4"></ion-col>
+                </ion-row>
+              </ion-grid>
+              <ion-card-header>
+                <ion-card-title class = "titolocards">Inserisci un incontro</ion-card-title>
+              </ion-card-header>
+              <ion-card-content>
+                <ion-row class = "testoriga">Grazie a questa funzionalità puoi associare un incontro a uno dei nuovi possibili lavoratori in BancaSella.</ion-row>
+                <ion-button (click) = "paginaInserisciIncontro()" class = "bottonecards" color = "success" expand = "full">Effettua Operazione</ion-button>
+              </ion-card-content>
+            </ion-card>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col size = "4">
+                <ion-card class = "stileCards">
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col size = "4"></ion-col>
+                      <ion-col size = "4"><ion-icon horizontal = "center" name="filing" class = "iconCards"></ion-icon></ion-col>
+                      <ion-col size = "4"></ion-col>
+                    </ion-row>
+                  </ion-grid>
+                    <ion-card-header>
+                      <ion-card-title class = "titolocards">Approva domanda</ion-card-title>
+                    </ion-card-header>
+                    <ion-card-content>
+                      <ion-row class = "testoriga">Grazie a questa funzionalità puoi ottenere tutti i documenti caricati dai vari utenti, quindi approvarli.</ion-row>
+                      <ion-button (click) = "paginaApprovazione()" class = "bottonecards" color = "success" expand = "full">Effettua Operazione</ion-button>
+                    </ion-card-content>
+                  </ion-card>
+            </ion-col>
+            <ion-col size = "4">
+              <ion-card class = "stileCards">
+                <ion-grid>
+                  <ion-row>
+                    <ion-col size = "4"></ion-col>
+                    <ion-col size = "4"><ion-icon horizontal = "center" name="link" class = "iconCards"></ion-icon></ion-col>
+                    <ion-col size = "4"></ion-col>
+                  </ion-row>
+                </ion-grid>
+                <ion-card-header>
+                  <ion-card-title class = "titolocards">Carica documenti</ion-card-title>
+                </ion-card-header>
+                <ion-card-content>
+                  <ion-row class = "testoriga">Grazie a questa funzionalità puoi caricare documenti che i vari utenti dovranno compilare.</ion-row>
+                  <ion-button (click) = "paginaCaricamento()" class = "bottonecards" color = "success" expand = "full">Effettua Operazione</ion-button>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+            <ion-col size = "4">
+                <ion-card class = "stileCards"> 
+                  <ion-grid>
+                    <ion-row>
+                      <ion-col size = "4"></ion-col>
+                      <ion-col size = "4"><ion-icon horizontal = "center" name="trash" class = "iconCards"></ion-icon></ion-col>
+                      <ion-col size = "4"></ion-col>
+                    </ion-row>
+                  </ion-grid>
+                  <ion-card-header>
+                    <ion-card-title class = "titolocards">Elimina utente</ion-card-title>
+                  </ion-card-header>
+                  <ion-card-content>
+                    <ion-row class = "testoriga">Elimina un utente scartato o che è diventato a tutti gli effetti un nuovo dipendente.</ion-row>
+                    <ion-button (click) = "eliminaUtente()" class = "bottonecards" color = "success" expand = "full">Effettua Operazione</ion-button>
+                  </ion-card-content>
+                </ion-card>
+              </ion-col>
+            </ion-row>
+  </ion-grid>
+</ion-content>
