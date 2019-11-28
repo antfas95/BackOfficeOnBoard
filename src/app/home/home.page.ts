@@ -23,4 +23,8 @@ export class HomePage {
   registrati() {
     this.router.navigate(['registrazione']);
   }
+
+  sezioneProva() {
+    this.router.navigate(['prova-tutorial']);
+  }
 }
