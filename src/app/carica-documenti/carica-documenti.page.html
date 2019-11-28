@@ -69,6 +69,13 @@
              <ion-card-title color = "light" class = "centro">Inserisci nuovo documento</ion-card-title>
           </ion-card-header>
           <ion-card-content>
+            <ion-row>
+              <ion-col col-md-6></ion-col>
+              <p class = "paragrafo">Seleziona il toggle se vuoi inviare solo a pochi utenti che verranno opportunamente ricercati. </p>
+              <p>No</p><ion-toggle [(ngModel)]="utente"></ion-toggle><p>Si</p>
+              <ion-col col-md-6></ion-col>
+            </ion-row>
+            <ion-searchbar *ngIf= utente placeholder = "ricerca utente"></ion-searchbar>
             <ion-item class = "margine">
                 <ion-label position = "floating">Titolo</ion-label>
                 <ion-input></ion-input>

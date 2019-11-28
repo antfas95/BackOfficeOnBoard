@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
 })
 export class CaricaDocumentiPage implements OnInit {
 
+  public utente: boolean = false;
+
   constructor(public router: Router) {
    }
 
