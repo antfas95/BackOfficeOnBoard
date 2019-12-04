@@ -1,8 +1,5 @@
 .cardcompleta{
     background-color: cornflowerblue;
-    vertical-align: top;
-    margin-top: 30vh;
-    margin-bottom: 5vh;
     margin-right: 5vh;
     margin-left: 5vh;
 }
@@ -14,4 +11,18 @@
 
 .margine{
     margin-bottom: 1ch;
+}
+
+.immagine {
+    height: 25vh;
+    width: 25vh;
+}
+
+.titolocards {
+    color: white;
+    text-align: center;
+}
+
+.submit-btn {
+    margin-top: 5vh;
 }
