@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color = "primary">
     <ion-icon name="arrow-back" (click)="goBack()" class = "dash"></ion-icon>
     <ion-icon name="trash" (click)="goBack()" class = "dash"></ion-icon>
     <ion-label class = "intestazione">Elimina referente</ion-label>
@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-card class = "cardcompleta">
+    <ion-card class = "cardcompleta" color = "primary">
         <ion-grid>
           <ion-row>
             <ion-col col-md-6></ion-col>
@@ -44,6 +44,7 @@
                   più la possibilità di verificare se ha già caricato i suoi documenti o meno.
                 </p>
                 <ion-button (click)= "elimnaReferente()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Conferma eliminazione</ion-button>
+                <a class = "link" (click)="goBack()">Clicca qui per annullare l'operazione</a>
               </ion-col>
         <ion-col col-md-6></ion-col>
       </ion-row>

@@ -1,14 +1,14 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color = "primary">
     <ion-icon name="arrow-back" (click)="goBack()" class = "freccia"></ion-icon>
     <ion-icon name="person-add" (click)="goBack()" class = "freccia"></ion-icon>
     <ion-label class = "intestazione">Registra un nuovo utente</ion-label>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-card class = "cardcompleta">
+  <ion-card class = "cardcompleta" color = "primary">
     <ion-card-header>
-       <ion-card-title color = "light" class = "centro">Dati registrazione</ion-card-title>
+       <ion-card-title class = "centro">Dati registrazione</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <ion-item class = "margine">
@@ -54,9 +54,9 @@
         </ion-item>
     </ion-card-content>
   </ion-card>
-  <ion-card class = "cardcompleta">
+  <ion-card class = "cardcompleta" color = "primary">
       <ion-card-header>
-         <ion-card-title color = "light" class = "centro">Credenziali d'accesso</ion-card-title>
+         <ion-card-title class = "centro">Credenziali d'accesso</ion-card-title>
       </ion-card-header>
       <ion-card-content>
         <form class="form" [formGroup]="validations_form"  (ngSubmit)="tryRegister(validations_form.value)">
@@ -82,12 +82,11 @@
                 </div>
               </ng-container>
             </div>
-            <ion-button  expand = "full" class="submit-btn" type="submit" [disabled]="!validations_form.valid">Register</ion-button>
+            <ion-button color = "tertiary" expand = "full" class="submit-btn" type="submit" [disabled]="!validations_form.valid">Register</ion-button>
             <label class="error-message">{{errorMessage}}</label>
             <label class="success-message">{{successMessage}}</label>
           </form>
-          <p class="go-to-login">Hai già un account? <a (click)="goLoginPage()">Try to Log In.</a></p>
-        <ion-button (click)= "registrati()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Registra nuovo utente</ion-button>
+          <p class="go-to-login">Hai già un account? <a class = "link" (click)="goLoginPage()">Try to Log In.</a></p>
       </ion-card-content>
     </ion-card>
 </ion-content>

@@ -34,10 +34,10 @@ p {
 }
 
 .intestazione {
-    font-size: 3vh;
+    font-size: 4vh;
     font-style: italic;
-    margin-left: 3vh;
-    color: blue;
+    margin-left: 4vh;
+    color: white;
 }
 
 .titolocards {
@@ -79,7 +79,6 @@ p {
 }
 
 .cardcompleta{
-    background-color: cornflowerblue;
     vertical-align: top;
     margin-bottom: 5vh;
     margin-right: 5vh;
@@ -106,4 +105,8 @@ p {
 
 .marginemod {
     margin-top: 3vh;
+}
+
+.link {
+    color: orangered;
 }

@@ -19,7 +19,7 @@ p {
 
 .titolo {
     text-align: left;
-    color: cornflowerblue;
+    color: grey;
     font-style: italic;
     margin-bottom: 3vh;
 }
@@ -40,16 +40,16 @@ p {
 }
 
 .intestazione {
-    font-size: 3vh;
+    font-size: 4vh;
     font-style: italic;
-    margin-left: 3vh;
-    color: blue;
+    margin-left: 4vh;
+    color: white;
 }
 
 .titolocards {
     text-align: center;
     font-family: 'Courier New', Courier, monospace;
-    color: red;
+    color: grey;
     font-size: 3vh;
 }
 
@@ -80,7 +80,6 @@ p {
 }
 
 .cardcompleta{
-    background-color: cornflowerblue;
     vertical-align: top;
     margin-bottom: 5vh;
     margin-right: 5vh;
@@ -92,5 +91,9 @@ p {
 }
 
 .cardAnnuncio {
-    background-color: thistle;
+    background-color: white;
+}
+
+.link {
+    color: orangered;
 }

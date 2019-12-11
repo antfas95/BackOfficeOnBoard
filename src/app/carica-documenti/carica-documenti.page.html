@@ -1,5 +1,5 @@
 <ion-header>
-    <ion-toolbar>
+    <ion-toolbar color = "primary">
       <ion-icon name="arrow-back" (click)="goBack()" class = "dash"></ion-icon>
       <ion-icon name="archive" (click)="goBack()" class = "dash"></ion-icon>
       <ion-label class = "intestazione">Carica documento</ion-label>
@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-    <ion-card class = "cardcompleta">
+    <ion-card class = "cardcompleta" color = "primary">
         <ion-grid>
             <ion-row>
               <ion-col col-md-6></ion-col>
@@ -16,7 +16,7 @@
             </ion-row>
           </ion-grid>
         <ion-card-header>
-           <ion-card-title color = "light" class = "centro">View Documenti caricati</ion-card-title>
+           <ion-card-title class = "centro">View Documenti caricati</ion-card-title>
         </ion-card-header>
         <ion-card-content>
           <ion-card class = "cardAnnuncio">
@@ -34,7 +34,7 @@
                       <p>Descrizione del documento</p>
                   </ion-col>
                   <ion-col col-md-2>
-                    <ion-button (click)= "goBack()" expand = "full" color = "danger" fill = "solid" shape = "round" size = "large">Elimina</ion-button>
+                    <ion-button (click)= "goBack()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Elimina</ion-button>
                   </ion-col>
                 </ion-row>
               </ion-grid>
@@ -55,7 +55,7 @@
                         <p>Descrizione del documento</p>
                     </ion-col>
                     <ion-col col-md-2>
-                      <ion-button (click)= "goBack()" expand = "full" color = "danger" fill = "solid" shape = "round" size = "large">Elimina</ion-button>
+                      <ion-button (click)= "goBack()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Elimina</ion-button>
                     </ion-col>
                   </ion-row>
                 </ion-grid>
@@ -64,9 +64,9 @@
         </ion-card-content>
       </ion-card>
 
-      <ion-card class = "cardcompleta">
+      <ion-card class = "cardcompleta" color = "primary">
           <ion-card-header>
-             <ion-card-title color = "light" class = "centro">Inserisci nuovo documento</ion-card-title>
+             <ion-card-title class = "centro">Inserisci nuovo documento</ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <ion-row>
@@ -91,7 +91,7 @@
             </ion-item>
   
             <ion-button (click) = "caricaDocumento()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Inserisci documento</ion-button>
-            <ion-button (click)= "goBack()" expand = "full" color = "danger" fill = "solid" shape = "round" size = "large">Annulla</ion-button>
+            <a class = "link" (click)="goBack()">Clicca qui per annullare l'operazione</a>
           </ion-card-content>
         </ion-card>
 </ion-content>

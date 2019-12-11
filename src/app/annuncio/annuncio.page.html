@@ -1,13 +1,12 @@
 <ion-header>
-    <ion-toolbar>
+    <ion-toolbar color = "primary">
       <ion-icon name="arrow-back" (click)="goBack()" class = "dash"></ion-icon>
       <ion-icon name="mail-open" (click)="goBack()" class = "dash"></ion-icon>
       <ion-label class = "intestazione">Inserisci annuncio</ion-label>
     </ion-toolbar>
   </ion-header>
-
 <ion-content>
-    <ion-card class = "cardcompleta">
+    <ion-card class = "cardcompleta" color = "primary">
         <ion-grid>
             <ion-row>
               <ion-col col-md-6></ion-col>
@@ -16,7 +15,7 @@
             </ion-row>
           </ion-grid>
         <ion-card-header>
-           <ion-card-title color = "light" class = "centro">Dati annuncio</ion-card-title>
+           <ion-card-title class = "centro">Dati annuncio</ion-card-title>
         </ion-card-header>
         <ion-card-content>
           <ion-item class = "margine">
@@ -30,7 +29,7 @@
           </ion-item>
 
           <ion-button (click) = "vistaAnnunci()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Inserisci annuncio</ion-button>
-          <ion-button (click)= "goBack()" expand = "full" color = "danger" fill = "solid" shape = "round" size = "large">Annulla</ion-button>
+          <a class = "link" (click)="goBack()">Clicca qui per annullare l'operazione</a>
         </ion-card-content>
       </ion-card>
 </ion-content>

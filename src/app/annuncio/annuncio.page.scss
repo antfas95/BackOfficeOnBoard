@@ -22,10 +22,10 @@ h1{
 }
 
 .intestazione {
-    font-size: 3vh;
+    font-size: 4vh;
     font-style: italic;
-    margin-left: 3vh;
-    color: blue;
+    margin-left: 4vh;
+    color: white;
 }
 
 .titolocards {
@@ -57,7 +57,6 @@ h1{
 }
 
 .cardcompleta{
-    background-color: cornflowerblue;
     vertical-align: top;
     margin-bottom: 5vh;
     margin-right: 5vh;
@@ -66,4 +65,12 @@ h1{
 
 .margine{
     margin-bottom: 1ch;
+}
+
+.centro {
+    color: white;
+}
+
+.link {
+    color: orangered;
 }
