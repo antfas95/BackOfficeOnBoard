@@ -16,6 +16,7 @@ const routes: Routes = [
   { path: 'add-referente', loadChildren: './add-referente/add-referente.module#AddReferentePageModule' },
   { path: 'elimina-referente', loadChildren: './elimina-referente/elimina-referente.module#EliminaReferentePageModule' },
   { path: 'prova-tutorial', loadChildren: './prova-tutorial/prova-tutorial.module#ProvaTutorialPageModule' },
+  { path: 'app-documents', loadChildren: './documents/documents.module#DocumentsPageModule' },
 ];
 
 @NgModule({
