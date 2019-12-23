@@ -16,6 +16,8 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
+import { UtenteService } from './services/utente.service';
+
 import * as firebase from 'firebase';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -30,6 +32,7 @@ firebase.initializeApp(environment.firebase);
     StatusBar,
     SplashScreen,
     AuthenticationService,
+    UtenteService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

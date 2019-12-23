@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-dashboard-def',
@@ -8,9 +9,13 @@ import { Router } from '@angular/router';
 })
 export class DashboardDefPage implements OnInit {
 
-  constructor(public router: Router) { }
+  idPassato: string;
+
+  constructor(public router: Router, private navCTRL: NavController, private activated: ActivatedRoute) { }
 
   ngOnInit() {
+    this.idPassato = this.activated.snapshot.paramMap.get('email');
+    console.log ('Ecco il parametro che è stato passato: ' + this.idPassato);
   }
 
   goBack() {

@@ -20,16 +20,30 @@
         <ion-card-content>
           <ion-item class = "margine">
               <ion-label position = "floating">Titolo</ion-label>
-              <ion-input></ion-input>
+              <ion-input [(ngModel)]= "annuncio.titolo"></ion-input>
           </ion-item>
           <ion-item>
             <ion-label>Dettagli</ion-label>
-            <ion-textarea placeholder = "Inserisci maggiori informazioni">
+            <ion-textarea [(ngModel)]= "annuncio.descrizione" placeholder = "Inserisci maggiori informazioni">
             </ion-textarea>
           </ion-item>
 
-          <ion-button (click) = "vistaAnnunci()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Inserisci annuncio</ion-button>
+          <ion-button (click) = "aggiungiAnnuncio()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Inserisci annuncio</ion-button>
           <a class = "link" (click)="goBack()">Clicca qui per annullare l'operazione</a>
+        </ion-card-content>
+      </ion-card>
+
+      <h2 text-center *ngIf="annunciAggiunti">File che hai caricato</h2>
+        <ion-card class = "secondacard" text-center *ngFor="let item of annunci | async">
+        <ion-card-header>
+          <ion-card-title color = "tertiary">
+           {{ item.titolo }}
+          </ion-card-title>
+        </ion-card-header>
+ 
+        <ion-card-content>
+          <p>Descrizione : {{ item.descrizione }}</p>
+          <ion-button (click)= "elimanAnnuncio(item)" color = tertiary>Elimina annuncio</ion-button>
         </ion-card-content>
       </ion-card>
 </ion-content>

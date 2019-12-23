@@ -14,11 +14,13 @@ export class HomePage {
 
   user: string;
   pass: string;
+  value: string;
   validations_form: FormGroup;
   errorMessage: string = '';
 
   // tslint:disable-next-line: max-line-length
-  constructor(private router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder) {}
+  constructor(private router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder) {
+  }
 
   ngOnInit() {
     this.validations_form = this.formBuilder.group({
@@ -39,16 +41,17 @@ export class HomePage {
       { type: 'pattern', message: 'Gentilmente inserisci una mail valida.' }
     ],
     'password': [
-      { type: 'required', message: 'Password è un campo obbligatorio' },
+      { type: 'required', message: 'Password è un campo obbligatorio'},
       { type: 'minlength', message: 'Password deve essere caratterizzata da almeno 5 caratteri' }
     ]
   };
 
-  loginUser(value){
+  loginUser(value) {
     this.authService.loginUser(value)
     .then(res => {
       console.log(res);
       this.errorMessage = '';
+      //console.log('Valore prima di passare alla pagina successiva: ' +);
       this.navCtrl.navigateForward('/dashboard-def');
     }, err => {
       this.errorMessage = err.message;
