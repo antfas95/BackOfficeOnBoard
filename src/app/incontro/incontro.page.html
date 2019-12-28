@@ -17,7 +17,9 @@
       <ion-row>
         <ion-col col-md-4></ion-col>
         <ion-col col-md-4>
-          <ion-searchbar placeholder = "ricerca utente"></ion-searchbar>
+          <ion-row>
+            <ion-searchbar (click)="effettuaRicerca()" [(ngModel)] = "valorericerca" placeholder = "ricerca utente"></ion-searchbar>
+          </ion-row>
         </ion-col>
         <ion-col col-md-4></ion-col>
       </ion-row>
@@ -27,13 +29,13 @@
       <ion-row>
         <ion-col col-md-6 class = "colonna1">
           <h1>Risultato della ricerca</h1>
-          <ion-list>
+          <ion-list *ngFor="let item of items | async">
             <ion-item>
               <ion-avatar slot="start">
                 <ion-icon class = "avatar" name="contact"></ion-icon>
                </ion-avatar>
               <ion-label>
-                <h2>Nome Cognome</h2>
+                <h2>Nome Cognome{{item | json}}</h2>
               </ion-label>
              </ion-item>
           </ion-list>

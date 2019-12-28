@@ -3,22 +3,23 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Utente } from '../models/Utente';
+import { Referente } from '../models/Referente';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UtenteService {
+export class ReferenteService {
 
-  itemsCollections: AngularFirestoreCollection<Utente>;
-  items: Observable<Utente[]>;
+  itemsCollections: AngularFirestoreCollection<Referente>;
+  items: Observable<Referente[]>;
 
   constructor(public afs: AngularFirestore, public afDatabase: AngularFireDatabase) {
-    this.itemsCollections = afs.collection<Utente>('users');
+    console.log('Eccomi mi trovo qui nel costruttore di colui che fornisce il servizio per i referenti');
+    this.itemsCollections = afs.collection<Referente>('referenti');
     //this.items = this.afs.collection('users').valueChanges();
-    this.items = this.afs.collection('users').snapshotChanges().pipe( map (changes => {
+    this.items = this.afs.collection('referenti').snapshotChanges().pipe( map (changes => {
       return changes.map(a => {
-        const data = a.payload.doc.data() as Utente;
+        const data = a.payload.doc.data() as Referente;
         const id = a.payload.doc.id;
         return data;
       });
@@ -26,18 +27,18 @@ export class UtenteService {
   );
   }
 
-  getUsers() {
+  getReferenti() {
     return this.items;
   }
 
-  addCliente(utente: Utente) {
-    console.log('Mi trovo qui con questi valori: ' + utente.nome + 'Cognome: ' + utente.cognome);
-    this.itemsCollections.add(utente);
+  addReferente(referente: Referente) {
+    console.log('Mi trovo qui con questi valori: ' + referente.nome + 'Cognome: ' + referente.cognome);
+    this.itemsCollections.add(referente);
   }
 
-  getUserEmail(email: string) {
+  getReferenteByEmail(email: string) {
     console.log('Mi trovo nel primo metodo');
-    this.itemsCollections = this.afs.collection('users', ref => {
+    this.itemsCollections = this.afs.collection('referenti', ref => {
       return ref.orderBy('nome').where ('email', '==', email);
     });
     this.items = this.itemsCollections.valueChanges();

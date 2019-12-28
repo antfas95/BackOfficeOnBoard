@@ -17,9 +17,12 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { UtenteService } from './services/utente.service';
+import { ReferenteService } from './services/referente.service';
 
 import * as firebase from 'firebase';
 import { ReactiveFormsModule } from '@angular/forms';
+
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 
 firebase.initializeApp(environment.firebase);
 
@@ -32,7 +35,9 @@ firebase.initializeApp(environment.firebase);
     StatusBar,
     SplashScreen,
     AuthenticationService,
+    AngularFireDatabase,
     UtenteService,
+    ReferenteService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

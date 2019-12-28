@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { UtenteService } from '../services/utente.service';
+import { Utente } from '../models/Utente';
+import { IncontroService } from '../services/incontro.service';
+import { Incontro } from '../models/Incontro';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-incontro',
@@ -8,7 +13,14 @@ import { Router } from '@angular/router';
 })
 export class IncontroPage implements OnInit {
 
-  constructor(public router: Router) { }
+  valorericerca: string;
+  items: Observable<Utente[]>;
+  
+  utenti: Observable<Utente[]>;
+
+  constructor(public router: Router, public uS: UtenteService, public iS: IncontroService) {
+    this.valorericerca = '';
+  }
 
   ngOnInit() {
   }
@@ -19,5 +31,9 @@ export class IncontroPage implements OnInit {
 
   inseriscIncontro() {
     alert ('Incontro memorizzato con successo');
+  }
+
+  effettuaRicerca() {
+    this.items = this.uS.getUserEmail(this.valorericerca);
   }
 }

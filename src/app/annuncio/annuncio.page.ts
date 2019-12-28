@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AnnunciService } from '../services/annunci.service';
 import { Annunci } from '../models/Annunci';
+import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -12,7 +13,7 @@ import { Observable } from 'rxjs';
 export class AnnuncioPage implements OnInit {
 
   annunciAggiunti: boolean;
-  annunci : Observable<Annunci[]>;
+  annunci: Observable<Annunci[]>;
 
   annuncio: Annunci = {
     titolo: '',

@@ -1,111 +1,141 @@
 <ion-header>
   <ion-toolbar color = "primary">
-    <ion-icon name= "arrow-back" (click)="goBack()" class = "freccia"></ion-icon>
+    <ion-icon name="arrow-back" (click)="goBack()" class = "freccia"></ion-icon>
     <ion-icon name="person-add" (click)="goBack()" class = "freccia"></ion-icon>
-    <ion-label class = "intestazione">Aggiungi referente</ion-label>
+    <ion-label class = "intestazione">Registra un nuovo utente</ion-label>
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <ion-card class = "cardcompleta" color = "primary">
-    <ion-card-header>
-       <ion-card-title class = "centro">Dati registrazione</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <ion-item class = "margine">
-        <ion-label position = "floating">Indirizzo e-mail</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
-      <ion-item class = "margine">
-          <ion-label position = "floating">Nome</ion-label>
-          <ion-input></ion-input>
-      </ion-item>
-      <ion-item class = "margine">
-          <ion-label position = "floating">Cognome</ion-label>
-          <ion-input></ion-input>
-      </ion-item>
-      <ion-radio-group>
-        <ion-list-header>
-          <ion-label color = "light">Sesso</ion-label>
-        </ion-list-header>
-        <ion-item>
-          <ion-label>Maschio</ion-label>
-          <ion-radio slot="start" value="maschio" checked></ion-radio>
-        </ion-item>
-        <ion-item>
-          <ion-label>Femmina</ion-label>
-          <ion-radio slot="start" value="femmina"></ion-radio>
-        </ion-item>
-      </ion-radio-group>
-      <ion-item class = "margine">
-        <ion-label position = "floating">Ruolo aziendale</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
-      <ion-item class = "margine">
-        <ion-label position = "floating">Titolo di studio</ion-label>
-        <ion-input></ion-input>
-      </ion-item>
-      <ion-item class= "marginemod">
-        <ion-label>Città di nascita</ion-label>
-        <ion-select ok-text="Seleziona" cancel-text="Annulla">
-          <ion-select-option value="napoli">Napoli</ion-select-option>
-          <ion-select-option value="avellino">Avellino</ion-select-option>
-          <ion-select-option value="nola">Nola</ion-select-option>
-          <ion-select-option value="milano">Milano</ion-select-option>
-          <ion-select-option value="roma">Roma</ion-select-option>
-          <ion-select-option value="sarno">Sarno</ion-select-option>
-          <ion-select-option value="cicciano">Cicciano</ion-select-option>
-        </ion-select>
-      </ion-item>
-      <ion-item>
-          <ion-label>Data di nascita</ion-label>
-          <ion-datetime value="1990-02-19" placeholder="Seleziona la data"></ion-datetime>
-        </ion-item>
-    </ion-card-content>
-  </ion-card>
-  <ion-card class = "cardcompleta" color = "primary">
-      <ion-card-header>
-         <ion-card-title class = "centro">Credenziali d'accesso</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-          <form class="form" [formGroup]="validations_form"  (ngSubmit)="tryRegister(validations_form.value)">
-              <ion-item>
-                <ion-label  position="floating" color="primary">Email</ion-label>
-                <ion-input type="text" formControlName="email"></ion-input>
-              </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of validation_messages.email">
-                  <div class="error-message" *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-              <ion-item>
-                <ion-label  position="floating" color="primary">Password</ion-label>
-                <ion-input type="password" formControlName="password" class="form-controll" required></ion-input>
-              </ion-item>
-              <div class="validation-errors">
-                <ng-container *ngFor="let validation of validation_messages.password">
-                  <div class="error-message" *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)">
-                    {{ validation.message }}
-                  </div>
-                </ng-container>
-              </div>
-              <ion-item>
-                  <ion-label  position="floating" color="primary">Conferma Password</ion-label>
-                  <ion-input type="password" formControlName="password2" class="form-controll" required></ion-input>
-              </ion-item>
-              <div class="validation-errors">
-                  <ng-container *ngFor="let validation of validation_messages.password2">
-                    <div class="error-message" *ngIf="validations_form.get('password2').hasError(validation.type) && (validations_form.get('password2').dirty || validations_form.get('password2').touched)">
+  <ion-row>
+    <ion-col col-md-4></ion-col>
+    <ion-col col-md-4>
+      <ion-card class = "cardcompleta" color = "primary">
+        <ion-card-header>
+           <ion-card-title class = "centro">Registra nuovo utente</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item>
+              <ion-label>Data di nascita</ion-label>
+              <ion-datetime [(ngModel)]="datanascita" value="1990-02-19" placeholder="Seleziona la data"></ion-datetime>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+      <ion-card class = "cardcompleta" color = "primary">
+          <ion-card-header>
+             <ion-card-title class = "centro">Registra nuovo utente</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <form class="form" [formGroup]="validations_form"  (ngSubmit)="tryRegister(validations_form.value)">
+                <ion-item>
+                  <ion-label position = "floating" color = primary>Nome</ion-label>
+                  <ion-input type = "text" [(ngModel)]="referente.nome" formControlName= "nome"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.nome">
+                    <div class="error-message" *ngIf="validations_form.get('nome').hasError(validation.type) && (validations_form.get('nome').dirty || validations_form.get('nome').touched)">
                       {{ validation.message }}
                     </div>
                   </ng-container>
-              </div>
-              <ion-button color = "tertiary" expand = "full" class="submit-btn" type="submit" [disabled]="!validations_form.valid">Register</ion-button>
-              <label class="error-message">{{errorMessage}}</label>
-              <label class="success-message">{{successMessage}}</label>
-            </form>
-      </ion-card-content>
-    </ion-card>
+                </div>
+                <ion-item>
+                  <ion-label position = "floating" color = primary>Cognome</ion-label>
+                  <ion-input type = "text" [(ngModel)]="referente.cognome" formControlName= "cognome"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.cognome">
+                    <div class="error-message" *ngIf="validations_form.get('cognome').hasError(validation.type) && (validations_form.get('cognome').dirty || validations_form.get('cognome').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item>
+                  <ion-label position = "floating" color = primary>Codice Fiscale</ion-label>
+                  <ion-input type = "text" [(ngModel)]="referente.codice_fiscale" formControlName= "codfiscale" ></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.codfiscale">
+                    <div class="error-message" *ngIf="validations_form.get('codfiscale').hasError(validation.type) && (validations_form.get('codfiscale').dirty || validations_form.get('codfiscale').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item>
+                  <ion-label>Città di nascita</ion-label>
+                  <ion-select ok-text="Seleziona" cancel-text="Annulla" [(ngModel)]="cittanascita"cittanascita formControlName= "citta">
+                    <ion-select-option value="napoli">Napoli</ion-select-option>
+                    <ion-select-option value="avellino">Avellino</ion-select-option>
+                    <ion-select-option value="nola">Nola</ion-select-option>
+                    <ion-select-option value="milano">Milano</ion-select-option>
+                    <ion-select-option value="roma">Roma</ion-select-option>
+                    <ion-select-option value="sarno">Sarno</ion-select-option>
+                    <ion-select-option value="cicciano">Cicciano</ion-select-option>
+                  </ion-select>
+                </ion-item>
+                <ion-item>
+                  <ion-label position = "floating" color = primary>Indirizzo</ion-label>
+                  <ion-input [(ngModel)]="referente.indirizzo" type = "text" formControlName= "indirizzo"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.indirizzo">
+                    <div class="error-message" *ngIf="validations_form.get('indirizzo').hasError(validation.type) && (validations_form.get('indirizzo').dirty || validations_form.get('indirizzo').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-radio-group [(ngModel)]="referente.sesso" formControlName= "sesso">
+                  <ion-list-header>
+                    <ion-label color = "light">Sesso</ion-label>
+                  </ion-list-header>
+                  <ion-item>
+                    <ion-label>Maschio</ion-label>
+                    <ion-radio slot="start" value="maschio" checked></ion-radio>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label>Femmina</ion-label>
+                    <ion-radio slot="start" value="femmina"></ion-radio>
+                  </ion-item>
+                </ion-radio-group>
+                <ion-item>
+                  <ion-label  position="floating" color="primary">Email</ion-label>
+                  <ion-input [(ngModel)]="referente.email" type="text" formControlName="email"></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.email">
+                    <div class="error-message" *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item>
+                  <ion-label  position="floating" color="primary">Password</ion-label>
+                  <ion-input type="password" formControlName="password" class="form-controll" required></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.password">
+                    <div class="error-message" *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-item>
+                  <ion-label  position="floating" color="primary">Conferma Password</ion-label>
+                  <ion-input type="password2" formControlName="password2" class="form-controll" required></ion-input>
+                </ion-item>
+                <div class="validation-errors">
+                  <ng-container *ngFor="let validation of validation_messages.password">
+                    <div class="error-message" *ngIf="validations_form.get('password2').hasError(validation.type) && (validations_form.get('password2').dirty || validations_form.get('password').touched)">
+                      {{ validation.message }}
+                    </div>
+                  </ng-container>
+                </div>
+                <ion-button color = "tertiary" expand = "full" class="submit-btn" type="submit" [disabled]="!validations_form.valid">Register</ion-button>
+                <label class="error-message">{{errorMessage}}</label>
+                <label class="success-message">{{successMessage}}</label>
+              </form>
+              <p class="go-to-login">Hai già un account? <a class = "link" (click)="goLoginPage()">Try to Log In.</a></p>
+          </ion-card-content>
+        </ion-card>
+    </ion-col>
+    <ion-col col-md-4></ion-col>
+  </ion-row>
 </ion-content>
