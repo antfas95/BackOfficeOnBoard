@@ -12,6 +12,7 @@ export class UtenteService {
 
   itemsCollections: AngularFirestoreCollection<Utente>;
   items: Observable<Utente[]>;
+  itemsSelct: Observable<Utente[]>;
 
   constructor(public afs: AngularFirestore, public afDatabase: AngularFireDatabase) {
     this.itemsCollections = afs.collection<Utente>('users');
@@ -19,7 +20,7 @@ export class UtenteService {
     this.items = this.afs.collection('users').snapshotChanges().pipe( map (changes => {
       return changes.map(a => {
         const data = a.payload.doc.data() as Utente;
-        const id = a.payload.doc.id;
+        data.id = a.payload.doc.id;
         return data;
       });
     })
@@ -32,15 +33,36 @@ export class UtenteService {
 
   addCliente(utente: Utente) {
     console.log('Mi trovo qui con questi valori: ' + utente.nome + 'Cognome: ' + utente.cognome);
-    this.itemsCollections.add(utente);
+    const a = this.itemsCollections.add(utente);
+    a.then(function(id) {
+      console.log(id.id);
+    });
+    console.log ('Ecco la a che viene generata: ' + a);
+    return a;
   }
 
   getUserEmail(email: string) {
     console.log('Mi trovo nel primo metodo');
+    /*
     this.itemsCollections = this.afs.collection('users', ref => {
       return ref.orderBy('nome').where ('email', '==', email);
     });
     this.items = this.itemsCollections.valueChanges();
     return this.items;
+    */
+    this.itemsSelct = this.afs.collection('users', ref=> { return ref.orderBy('nome').where ('email', '==', email)}).snapshotChanges().pipe( map (changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Utente;
+        data.id = a.payload.doc.id;
+        return data;
+      });
+    })
+  );
+    return this.itemsSelct;
+  }
+
+  eliminaUtente(utente: Utente) {
+    console.log ('Elimino utente: ' + utente.id);
+    this.itemsCollections.doc(utente.id).delete();
   }
 }

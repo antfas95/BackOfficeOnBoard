@@ -43,7 +43,7 @@ export class AnnunciService {
     console.log('Mi trovo qui con questi valori: ' + annuncio.titolo + 'Cognome: ' + annuncio.descrizione);
     const a = this.itemsCollections.add(annuncio);
 
-    a.then( function(id) {
+    a.then(function(id) {
       console.log(id.id);
     });
     console.log ('Ecco la a che viene generata: ' + a);

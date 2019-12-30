@@ -12,6 +12,7 @@ export class ReferenteService {
 
   itemsCollections: AngularFirestoreCollection<Referente>;
   items: Observable<Referente[]>;
+  itemsSelct: Observable<Referente[]>;
 
   constructor(public afs: AngularFirestore, public afDatabase: AngularFireDatabase) {
     console.log('Eccomi mi trovo qui nel costruttore di colui che fornisce il servizio per i referenti');
@@ -38,10 +39,19 @@ export class ReferenteService {
 
   getReferenteByEmail(email: string) {
     console.log('Mi trovo nel primo metodo');
-    this.itemsCollections = this.afs.collection('referenti', ref => {
-      return ref.orderBy('nome').where ('email', '==', email);
-    });
-    this.items = this.itemsCollections.valueChanges();
-    return this.items;
+    this.itemsSelct = this.afs.collection('referenti', ref=> { return ref.orderBy('nome').where ('email', '==', email)}).snapshotChanges().pipe( map (changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Referente;
+        data.id = a.payload.doc.id;
+        return data;
+      });
+    })
+  );
+    return this.itemsSelct;
+  }
+
+  eliminaUtente(utente: Referente) {
+    console.log ('Elimino utente: ' + utente.id);
+    this.itemsCollections.doc(utente.id).delete();
   }
 }
