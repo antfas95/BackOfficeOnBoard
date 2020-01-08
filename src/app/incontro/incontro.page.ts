@@ -24,6 +24,7 @@ export class IncontroPage implements OnInit {
   ricercaSede: boolean;
   ricercaFatta: boolean;
   utenti: Observable<Utente[]>;
+  incontri: Observable<Incontro[]>;
 
   cityMeeting: string;
 
@@ -35,6 +36,7 @@ export class IncontroPage implements OnInit {
     indirizzo: '',
   };
 
+  // tslint:disable-next-line: max-line-length
   constructor(public router: Router, public uS: UtenteService, public iS: IncontroService, public rS: ReferenteService, public indirizzoService: IndirizziService) {
     this.valorericerca = '';
     this.cityMeeting = '';
@@ -70,6 +72,7 @@ export class IncontroPage implements OnInit {
       this.incontro.emailUtente = this.valorericerca;
       this.ricercaFatta = true;
       this.items = this.uS.getUserEmail(this.valorericerca);
+      this.iS.initVariabili(this.valorericerca);
     }
   }
 
@@ -79,7 +82,7 @@ export class IncontroPage implements OnInit {
     console.log('Ora Incontro: ' + this.incontro.ora);
     const ritorno = this.iS.addIncontro(this.incontro);
     console.log ('Ecco il ritorno: ' + ritorno);
-    //this.vistaAnnunciInseriti();
+    // this.vistaAnnunciInseriti();
   }
 
   ricercaIndirizzi() {
@@ -95,6 +98,10 @@ export class IncontroPage implements OnInit {
   }
 
   effettuaProve() {
+    this.incontri = this.iS.getIncontri();
     console.log ('Ecco le sedi' + this.sedi + 'Ecco la città: ' + this.cityMeeting);
+  }
+
+  getIncontri() {
   }
 }

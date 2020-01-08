@@ -10,6 +10,8 @@ import { Utente } from '../models/Utente';
 })
 export class UtenteService {
 
+  email: string;
+
   itemsCollections: AngularFirestoreCollection<Utente>;
   items: Observable<Utente[]>;
   itemsSelct: Observable<Utente[]>;
@@ -34,12 +36,20 @@ export class UtenteService {
   addCliente(utente: Utente) {
     console.log ('Mi trovo nel metodo di aggiunta con questa data di nascita: ' + utente.datanascita);
     console.log('Mi trovo qui con questi valori: ' + utente.nome + 'Cognome: ' + utente.cognome);
+    const email = utente.email;
+    this.itemsCollections.doc(utente.email).set(utente).then(resp => {
+      console.log(resp);
+    }).catch(error => {
+      console.log("error " + error);
+    });
+    /*
     const a = this.itemsCollections.add(utente);
     a.then(function(id) {
       console.log(id.id);
     });
     console.log ('Ecco la a che viene generata: ' + a);
     return a;
+    */
   }
 
   getUserEmail(email: string) {

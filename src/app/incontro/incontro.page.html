@@ -77,5 +77,8 @@
         <ion-col col-md-5></ion-col>
       </ion-row>
     </ion-grid>
+    <div *ngFor = "let inc of incontri | async">
+      <p>{{inc.indirizzo}}</p>
+    </div>
     <ion-button (click) = "effettuaProve()">Prova</ion-button>
 </ion-content>

@@ -20,7 +20,7 @@ export interface MyData {
 })
 export class CaricaDocumentiPage {
 
-  // Upload Task 
+  // Upload Task
   task: AngularFireUploadTask;
  
   // Progress in percentage
@@ -63,7 +63,7 @@ export class CaricaDocumentiPage {
     // Totally optional metadata
     const customMetadata = { app: 'Freaky Image Upload Demo' }; 
     //File reference
-    const fileRef = this.storage.ref(path); 
+    const fileRef = this.storage.ref(path);
     // The main task
     this.task = this.storage.upload(path, file, { customMetadata }); 
     // Get file progress percentage

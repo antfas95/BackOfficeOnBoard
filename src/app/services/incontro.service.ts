@@ -15,12 +15,15 @@ export class IncontroService {
   documentFire: AngularFirestoreDocument<Incontro>;
 
   public incontri: AngularFireList<Incontro>;
+  email: string;
 
-  constructor(public afs: AngularFirestore, public afDatabase: AngularFireDatabase) {
-    this.incontri = afDatabase.list('/incontro');
-    this.itemsCollections = afs.collection<Incontro>('incontro', ref => ref.orderBy('data', 'asc'));
+  constructor(public afDatabase: AngularFireDatabase, public afs: AngularFirestore) {
+    console.log('Mi trovo nel metodo costruttore');
+    this.email = 'prova';
+    //this.incontri = this.afDatabase.list('/incontro');
+    this.itemsCollections = this.afs.collection<Incontro>('users', ref => ref.orderBy('data', 'asc'));
 
-    this.items = this.afs.collection('incontro').snapshotChanges().pipe( map (changes => {
+    this.items = this.afs.collection('users').snapshotChanges().pipe( map (changes => {
       return changes.map(a => {
         const data = a.payload.doc.data() as Incontro;
         data.id = a.payload.doc.id;
@@ -31,18 +34,28 @@ export class IncontroService {
   );
   }
 
+  initVariabili(email: string) {
+    this.email = email;
+  }
+
   getIncontri() {
     return this.items;
   }
 
   addIncontro(incontro: Incontro) {
     console.log ('Mi trovo nel metodo con i seguenti valori, referente: ' + incontro.emailReferente + 'utente: ' + incontro.emailUtente + 'indirizzo: ' + incontro.indirizzo + 'data: ' + incontro.data + 'ora' + incontro.ora);
-    const a = this.itemsCollections.add(incontro);
-
+    //const a = this.itemsCollections.add(incontro);
+    this.itemsCollections.doc(this.email).collection('incontro').add(incontro).then(resp => {
+      console.log(resp);
+    }).catch(error => {
+      console.log("error " + error);
+    });
+    /*
     a.then(function(id) {
       console.log(id.id);
     });
     console.log ('Ecco la a che viene generata: ' + a);
     return a;
+    */
   }
 }
