@@ -17,7 +17,9 @@ export class AnnuncioPage implements OnInit {
 
   annuncio: Annunci = {
     titolo: '',
-    descrizione: ''
+    descrizione: '',
+    data: '',
+    ora: ''
   };
 
   constructor(public router: Router, public annunciService: AnnunciService) {
@@ -36,7 +38,9 @@ export class AnnuncioPage implements OnInit {
   }
 
   aggiungiAnnuncio() {
-    console.log('Ecco i valori che sono stati ritornati: ' + this.annuncio.titolo + ' ' + this.annuncio.descrizione + 'Provo ad aggiungerlo al Database');
+    this.annuncio.ora = this.annuncio.data.toString().substring(11, 16);
+    this.annuncio.data = this.annuncio.data.toString().substring(0, 10);
+    console.log('Ora annuncio: ' + this.annuncio.ora);
     const ritorno = this.annunciService.addAnnuncio(this.annuncio);
     this.vistaAnnunciInseriti();
   }
@@ -56,5 +60,11 @@ export class AnnuncioPage implements OnInit {
     console.log('Ecco il titolo del documento da eliminare: ' + annuncio.titolo);
     this.annunciService.deleteAnnuncio(annuncio);
     this.vistaAnnunciInseriti();
+  }
+
+  ritornoData() {
+    console.log ('Stampo la data: ' + this.annuncio.data.toString().substring(0, 10));
+    console.log ('Stampo orario: ' + this.annuncio.data.toString().substring(11, 16));
+    console.log ('Questa è la data inserita' + this.annuncio.data);
   }
 }

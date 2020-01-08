@@ -18,6 +18,8 @@ import { AngularFireStorageModule } from '@angular/fire/storage';
 
 import { UtenteService } from './services/utente.service';
 import { ReferenteService } from './services/referente.service';
+import { IncontroService } from './services/incontro.service';
+import { IndirizziService } from './services/indirizzi.service';
 
 import * as firebase from 'firebase';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -38,6 +40,8 @@ firebase.initializeApp(environment.firebase);
     AngularFireDatabase,
     UtenteService,
     ReferenteService,
+    IncontroService,
+    IndirizziService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

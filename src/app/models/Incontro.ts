@@ -1,7 +1,8 @@
 export interface Incontro {
-    id: string;
+    id?: string;
     emailUtente: string;
     emailReferente?: string;
-    data: Date;
+    data: string;
+    ora: string;
     indirizzo: string;
 }

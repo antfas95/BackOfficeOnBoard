@@ -5,14 +5,14 @@
 export const environment = {
   production: false,
   firebase : {
-  apiKey: 'AIzaSyBy3rKulnMlw0kQLCTUOtfC1N3J7St-QzM',
-  authDomain: 'insella-4bb14.firebaseapp.com',
-  databaseURL: 'https://insella-4bb14.firebaseio.com',
-  projectId: 'insella-4bb14',
-  storageBucket: 'insella-4bb14.appspot.com',
-  messagingSenderId: '590135334724',
-  appId: '1:590135334724:web:ff122a43e83881f40aa911',
-  measurementId: 'G-L0SLFQN4K0'
+    apiKey: "AIzaSyDmnC4BjA2_25WjCx57W3s3bTmzvbixQgM",
+    authDomain: "sella-57777.firebaseapp.com",
+    databaseURL: "https://sella-57777.firebaseio.com",
+    projectId: "sella-57777",
+    storageBucket: "sella-57777.appspot.com",
+    messagingSenderId: "87202624678",
+    appId: "1:87202624678:web:a7e9ee3c8d78803449f067",
+    measurementId: "G-5RGVTWBJGL"
   }
 };
 

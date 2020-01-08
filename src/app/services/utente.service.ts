@@ -32,6 +32,7 @@ export class UtenteService {
   }
 
   addCliente(utente: Utente) {
+    console.log ('Mi trovo nel metodo di aggiunta con questa data di nascita: ' + utente.datanascita);
     console.log('Mi trovo qui con questi valori: ' + utente.nome + 'Cognome: ' + utente.cognome);
     const a = this.itemsCollections.add(utente);
     a.then(function(id) {

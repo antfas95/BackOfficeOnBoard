@@ -23,6 +23,14 @@
               <ion-input [(ngModel)]= "annuncio.titolo"></ion-input>
           </ion-item>
           <ion-item>
+            <ion-label>Data</ion-label>
+            <ion-datetime [(ngModel)]="annuncio.data" value="1990-02-19" placeholder="Seleziona la data"></ion-datetime>
+          </ion-item>
+          <ion-item class = "margine">
+            <ion-label>Orario</ion-label>
+            <ion-datetime [(ngModel)]="annuncio.data" display-format="h:mm A" picker-format="h:mm A" value="1990-02-19T07:43Z"></ion-datetime>
+        </ion-item>
+          <ion-item class = "margine">
             <ion-label>Dettagli</ion-label>
             <ion-textarea [(ngModel)]= "annuncio.descrizione" placeholder = "Inserisci maggiori informazioni">
             </ion-textarea>
@@ -32,7 +40,7 @@
           <a class = "link" (click)="goBack()">Clicca qui per annullare l'operazione</a>
         </ion-card-content>
       </ion-card>
-
+      <div></div>
       <h2 text-center *ngIf="annunciAggiunti">File che hai caricato</h2>
         <ion-card class = "secondacard" text-center *ngFor="let item of annunci | async">
         <ion-card-header>
@@ -42,8 +50,11 @@
         </ion-card-header>
  
         <ion-card-content>
+          <p>Data: {{item.data}}</p>
+          <p>Orario: {{item.ora}}</p>
           <p>Descrizione : {{ item.descrizione }}</p>
           <ion-button (click)= "elimanAnnuncio(item)" color = tertiary>Elimina annuncio</ion-button>
         </ion-card-content>
       </ion-card>
+      <ion-button (click) = "ritornoData()">Prova</ion-button>
 </ion-content>

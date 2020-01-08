@@ -14,10 +14,12 @@ import { Referente } from '../models/Referente';
 
 export class AddReferentePage implements OnInit {
 
+  datanascita: Date;
   referente: Referente = {
     email: '',
     nome: '',
     cognome: '',
+    datanascita: '',
     codice_fiscale: '',
     sesso: '',
     cittàNascita: '',
@@ -33,7 +35,6 @@ export class AddReferentePage implements OnInit {
   username: string;
   password: string;
   confirmpassword: string;
-  datanascita: Date;
   giorno: number;
 
   //Variabili utili per l'autentcicazione
@@ -61,6 +62,9 @@ export class AddReferentePage implements OnInit {
     'cognome' : [
       { type: 'required', message: 'Il cognome è un campo obbligatorio' },
       { type: 'minlenght', message: 'Il cognome deve essere di almeno 3 caratteri' }
+    ],
+    'nascita': [
+      { type: 'required', message: 'La città è un campo obbligatorio' },
     ],
     'codfiscale': [
       { type: 'required', message: 'Codice Fiscale è un campo obbligatorio' },
@@ -102,6 +106,8 @@ export class AddReferentePage implements OnInit {
         Validators.minLength(3),
         Validators.required
       ])),
+      nascita: new FormControl('', Validators.compose([
+      ])),
       codfiscale: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$')
@@ -127,7 +133,9 @@ export class AddReferentePage implements OnInit {
   }
 
   addReferente() {
+    console.log ('Ecco la data di nascita: ' + this.datanascita);
     this.referente.cittàNascita = this.cittanascita;
+    this.referente.datanascita = this.datanascita.toString().substring(0, 10);
     // tslint:disable-next-line: max-line-length
     console.log ('Ecco tutte le info: ' + this.referente.nome + this.referente.cognome + this.referente.email + this.referente.codice_fiscale + this.referente.indirizzo + this.referente.sesso + this.referente.cittàNascita);
     this.itemService.addReferente(this.referente);
@@ -148,6 +156,7 @@ export class AddReferentePage implements OnInit {
        this.errorMessage = '';
        this.successMessage = 'Il tuo account è stato correttamente creato prova a loggarti';
        this.referente.cittàNascita = this.cittanascita;
+       this.referente.datanascita = this.datanascita.toString().substring(0, 10);
        this.itemService.addReferente(this.referente);
        this.referente.nome = '';
        this.referente.cognome = '';

@@ -27,51 +27,55 @@
   </ion-card>
     <ion-grid>
       <ion-row>
-        <ion-col col-md-6 class = "colonna1">
-          <h1>Risultato della ricerca</h1>
-          <ion-list *ngFor="let item of items | async">
-            <ion-item>
-              <ion-avatar slot="start">
-                <ion-icon class = "avatar" name="contact"></ion-icon>
-               </ion-avatar>
-              <ion-label>
-                <h2>Nome Cognome{{item | json}}</h2>
-              </ion-label>
-             </ion-item>
-          </ion-list>
-          <h1>Altre informazioni dell'utente</h1>
-          <p>Verranno inserite avrie informazioni inerenti a dati anagrafici dell'utente ricercato
-            più la possibilità di verificare se ha già caricato i suoi documenti o meno.
-          </p>
+        <ion-col col-md-6 class = "colonna1" *ngIf="ricercaFatta">
+          <ion-col col-md-6 class = "colonna1" *ngFor = "let item of items | async">
+            <h1>Risultato della ricerca</h1>
+            <h2 text-center>{{item.email}}</h2>
+            <h1>Altre informazioni</h1>
+            <p>Nome:</p> {{item.nome}}
+            <p>Cognome:</p> {{item.cognome}}
+            <p>Data Nascita: {{item.datanascita}}</p>
+            <p>Codice fiscale:</p> {{item.codice_fiscale}}
+            <p>Indirizzo:</p> {{item.indirizzo}}
+            <a class = "link" (click)="goBack()">Clicca qui per annullare l'operazione</a>
+          </ion-col>
         </ion-col>
         <ion-col col-md-6 class = "colonna1">
           <h1>Dettagli incontro</h1>
             <ion-item class= "marginemod">
                 <ion-label>Referente</ion-label>
-                <ion-select ok-text="Seleziona" cancel-text="Annulla">
-                  <ion-select-option value="napoli">Antonio Fasulo</ion-select-option>
-                  <ion-select-option value="avellino">Francesco Garofalo</ion-select-option>
-                  <ion-select-option value="nola">Anna Tomeo</ion-select-option>
+                <ion-select ok-text="Seleziona" cancel-text="Annulla" [(ngModel)]="incontro.emailReferente">
+                  <div *ngFor = "let ref of referenti | async">
+                  <ion-select-option value = {{ref.email}}>{{ref.email}}</ion-select-option>
+                  </div>
                 </ion-select>
             </ion-item>
             <ion-item class = "marginemod">
                 <ion-label>Data</ion-label>
-                <ion-datetime value="02-11-2019" placeholder="Select Date"></ion-datetime>
+                <ion-datetime [(ngModel)]="incontro.data" value="02-11-2019" placeholder="Select Date"></ion-datetime>
             </ion-item>
-            <ion-item class = "marginemod">
-                <ion-label>Start Time</ion-label>
-                <ion-datetime display-format="h:mm A" picker-format="h:mm A" value="1990-02-19T07:43Z"></ion-datetime>
+            <ion-item>
+                <ion-label>Orario</ion-label>
+                <ion-datetime [(ngModel)]="incontro.data" display-format="h:mm A" picker-format="h:mm A" value="1990-02-19T07:43Z"></ion-datetime>
             </ion-item>
-            <h2>Indirizzo dell'incontro</h2>
-            <p>L'indirizzo deve essere un parametro standard</p>
+            <ion-searchbar (click)="ricercaIndirizzi()" [(ngModel)] = "cityMeeting" placeholder = "Città dell'incontro"></ion-searchbar>
+            <ion-item class= "marginemod" *ngIf="ricercaSede">
+              <ion-label>Scegli indirizzi associati alla provincia selezionata</ion-label>
+              <ion-select ok-text="Seleziona" cancel-text="Annulla" [(ngModel)]="incontro.indirizzo">
+                <div *ngFor = "let sedi of sedi | async">
+                <ion-select-option value = {{sedi.Indirizzo}}>{{sedi.Indirizzo}}</ion-select-option>
+              </div>
+              </ion-select>
+          </ion-item>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col col-md-5></ion-col>
         <ion-col col-md-2>
-          <ion-button (click)= "inseriscIncontro()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Conferma Incontro</ion-button>
+          <ion-button (click)= "aggiungiIncontro()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Conferma Incontro</ion-button>
         </ion-col>
         <ion-col col-md-5></ion-col>
       </ion-row>
     </ion-grid>
+    <ion-button (click) = "effettuaProve()">Prova</ion-button>
 </ion-content>

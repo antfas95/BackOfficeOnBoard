@@ -7,19 +7,7 @@
 </ion-header>
 <ion-content>
   <ion-row>
-    <ion-col col-md-4></ion-col>
-    <ion-col col-md-4>
-      <ion-card class = "cardcompleta" color = "primary">
-        <ion-card-header>
-           <ion-card-title class = "centro">Registra nuovo utente</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-item>
-              <ion-label>Data di nascita</ion-label>
-              <ion-datetime [(ngModel)]="datanascita" value="1990-02-19" placeholder="Seleziona la data"></ion-datetime>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
+    <ion-col col-md-6></ion-col>
       <ion-card class = "cardcompleta" color = "primary">
           <ion-card-header>
              <ion-card-title class = "centro">Registra nuovo utente</ion-card-title>
@@ -49,6 +37,10 @@
                   </ng-container>
                 </div>
                 <ion-item>
+                  <ion-label>Data di nascita</ion-label>
+                  <ion-datetime [(ngModel)]="datanascita" formControlName= "nascita" value="1990-02-19" placeholder="Seleziona la data" (ionChange)= "dataChanged($event)"></ion-datetime>
+                </ion-item>
+                <ion-item>
                   <ion-label position = "floating" color = primary>Codice Fiscale</ion-label>
                   <ion-input type = "text" [(ngModel)]="utente.codice_fiscale" formControlName= "codfiscale" ></ion-input>
                 </ion-item>
@@ -61,7 +53,7 @@
                 </div>
                 <ion-item>
                   <ion-label>Città di nascita</ion-label>
-                  <ion-select ok-text="Seleziona" cancel-text="Annulla" [(ngModel)]="cittanascita"cittanascita formControlName= "citta">
+                  <ion-select ok-text="Seleziona" cancel-text="Annulla" [(ngModel)]="cittanascita" formControlName= "citta">
                     <ion-select-option value="napoli">Napoli</ion-select-option>
                     <ion-select-option value="avellino">Avellino</ion-select-option>
                     <ion-select-option value="nola">Nola</ion-select-option>
@@ -119,7 +111,7 @@
                 </div>
                 <ion-item>
                   <ion-label  position="floating" color="primary">Conferma Password</ion-label>
-                  <ion-input type="password2" formControlName="password2" class="form-controll" required></ion-input>
+                  <ion-input type="password" formControlName="password2" class="form-controll" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validation_messages.password">
@@ -135,8 +127,7 @@
               <p class="go-to-login">Hai già un account? <a class = "link" (click)="goLoginPage()">Try to Log In.</a></p>
           </ion-card-content>
         </ion-card>
-    </ion-col>
-    <ion-col col-md-4></ion-col>
+    <ion-col col-md-6></ion-col>
   </ion-row>
   <ion-button (click)="getCitta()"></ion-button>
 </ion-content>

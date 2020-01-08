@@ -10,17 +10,6 @@
     <ion-col col-md-4></ion-col>
     <ion-col col-md-4>
       <ion-card class = "cardcompleta" color = "primary">
-        <ion-card-header>
-           <ion-card-title class = "centro">Registra nuovo utente</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-item>
-              <ion-label>Data di nascita</ion-label>
-              <ion-datetime [(ngModel)]="datanascita" value="1990-02-19" placeholder="Seleziona la data"></ion-datetime>
-          </ion-item>
-        </ion-card-content>
-      </ion-card>
-      <ion-card class = "cardcompleta" color = "primary">
           <ion-card-header>
              <ion-card-title class = "centro">Registra nuovo utente</ion-card-title>
           </ion-card-header>
@@ -48,6 +37,10 @@
                     </div>
                   </ng-container>
                 </div>
+                <ion-item>
+                  <ion-label>Data di nascita</ion-label>
+                  <ion-datetime [(ngModel)]="datanascita" formControlName= "nascita" value="1990-02-19" placeholder="Seleziona la data"></ion-datetime>
+                </ion-item>
                 <ion-item>
                   <ion-label position = "floating" color = primary>Codice Fiscale</ion-label>
                   <ion-input type = "text" [(ngModel)]="referente.codice_fiscale" formControlName= "codfiscale" ></ion-input>
@@ -119,7 +112,7 @@
                 </div>
                 <ion-item>
                   <ion-label  position="floating" color="primary">Conferma Password</ion-label>
-                  <ion-input type="password2" formControlName="password2" class="form-controll" required></ion-input>
+                  <ion-input type="password" formControlName="password2" class="form-controll" required></ion-input>
                 </ion-item>
                 <div class="validation-errors">
                   <ng-container *ngFor="let validation of validation_messages.password">

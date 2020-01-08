@@ -13,26 +13,22 @@ import { Utente } from '../models/Utente';
 })
 export class RegistrazionePage implements OnInit {
 
+  //Data che mi serve come valore che viene prelevato all'interno della pagina
+  cittanascita: string;
+  datanascita: Date;
+  //Data di oggi
+  mydate = new Date().toISOString();
+
   utente: Utente = {
     email: '',
     nome: '',
     cognome: '',
+    datanascita: '',
     codice_fiscale: '',
     sesso: '',
     cittàNascita: '',
     indirizzo: '',
   };
-  
-  codice_fiscale: string;
-  nome: string;
-  cognome: string;
-  luogonascita: string;
-  cittanascita: string;
-  username: string;
-  password: string;
-  confirmpassword: string;
-  datanascita: Date;
-  giorno: number;
 
   //Variabili utili per l'autentcicazione
   validations_form: FormGroup;
@@ -59,6 +55,9 @@ export class RegistrazionePage implements OnInit {
     'cognome' : [
       { type: 'required', message: 'Il cognome è un campo obbligatorio' },
       { type: 'minlenght', message: 'Il cognome deve essere di almeno 3 caratteri' }
+    ],
+    'nascita': [
+      { type: 'required', message: 'La città è un campo obbligatorio' },
     ],
     'codfiscale': [
       { type: 'required', message: 'Codice Fiscale è un campo obbligatorio' },
@@ -100,6 +99,8 @@ export class RegistrazionePage implements OnInit {
         Validators.minLength(3),
         Validators.required
       ])),
+      nascita: new FormControl('', Validators.compose([
+      ])),
       codfiscale: new FormControl('', Validators.compose([
         Validators.required,
         Validators.pattern('^[a-zA-Z]{6}[0-9]{2}[a-zA-Z][0-9]{2}[a-zA-Z][0-9]{3}[a-zA-Z]$')
@@ -124,6 +125,7 @@ export class RegistrazionePage implements OnInit {
 
   addCliente() {
     this.utente.cittàNascita = this.cittanascita;
+    this.utente.datanascita = this.datanascita.toString().substring(0, 10);
     console.log ('Ecco tutte le info: ' + this.utente.nome + this.utente.cognome + this.utente.email + this.utente.codice_fiscale + this.utente.indirizzo + this.utente.sesso + this.utente.cittàNascita);
     this.itemService.addCliente(this.utente);
     this.utente.nome = '';
@@ -142,6 +144,7 @@ export class RegistrazionePage implements OnInit {
        console.log(res);
        this.errorMessage = '';
        this.successMessage = 'Il tuo account è stato correttamente creato prova a loggarti';
+       this.utente.datanascita = this.datanascita.toString().substring(0, 10);
        this.utente.cittàNascita = this.cittanascita;
        this.itemService.addCliente(this.utente);
        this.utente.nome = '';
@@ -165,6 +168,15 @@ export class RegistrazionePage implements OnInit {
 
   getCitta() {
     this.utente.cittàNascita = this.cittanascita;
-    console.log('Mi trovo nel metodo ecco il valore ritornato: ' + this.utente.nome + this.utente.cognome + this.utente.cittàNascita);
+    console.log('Ecco il valore della data inserita' + this.datanascita.toString().substring(0, 10));
+  }
+
+  dataChanged(date) {
+    this.utente.datanascita = this.datanascita.toString();
+    console.log ("Ecco il valore associato all'utente: " + this.utente.datanascita);
+    //E' esattamente viceversa la prima console mostra la data inserita la seconda invece quella odierna, incluso orario
+    console.log("Questa in teoria dovrebbe essere la data di oggi" + date.detail.value);
+    console.log("Questa è la data inserita da me: " + this.mydate);
+    console.log ("Valore associato alla mia data di nascita: " + this.datanascita.toString());
   }
 }
