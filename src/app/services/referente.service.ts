@@ -34,7 +34,11 @@ export class ReferenteService {
 
   addReferente(referente: Referente) {
     console.log('Mi trovo qui con questi valori: ' + referente.nome + 'Cognome: ' + referente.cognome);
-    this.itemsCollections.add(referente);
+    this.itemsCollections.doc(referente.email).set(referente).then(resp => {
+      console.log(resp);
+    }).catch(error => {
+      console.log("error " + error);
+    });
   }
 
   getReferenteByEmail(email: string) {

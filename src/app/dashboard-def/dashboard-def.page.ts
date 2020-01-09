@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
+import { IncontroService } from '../services/incontro.service';
+import { Incontro } from '../models/Incontro';
+import { Observable } from 'rxjs';
+import { AuthenticationService } from '../services/authentication.service';
+
 
 @Component({
   selector: 'app-dashboard-def',
@@ -9,13 +14,20 @@ import { NavController } from '@ionic/angular';
 })
 export class DashboardDefPage implements OnInit {
 
-  idPassato: string;
+  emailAuth: string;
 
-  constructor(public router: Router, private navCTRL: NavController, private activated: ActivatedRoute) { }
+  idPassato: string;
+  incontri: Observable<Incontro[]>;
+
+  constructor(public router: Router, private navCTRL: NavController, private activated: ActivatedRoute, private iS: IncontroService, private authService: AuthenticationService) { }
 
   ngOnInit() {
-    this.idPassato = this.activated.snapshot.paramMap.get('email');
-    console.log ('Ecco il parametro che è stato passato: ' + this.idPassato);
+    this.emailAuth = this.authService.userDetails().email;
+    console.log ('Ecco utente passato: ' + this.emailAuth);
+    this.incontri = this.iS.getIncontriByReferenti(this.emailAuth);
+    // this.idPassato = this.activated.snapshot.paramMap.get('email');
+    // this.incontri = this.iS.getIncontriByReferenti('roberto.lagana@sella.it');
+    // console.log ('Ecco il parametro che è stato passato: ' + this.idPassato);
   }
 
   goBack() {

@@ -15,6 +15,24 @@
     </ion-row>
   </ion-grid>
 
+  <ion-row>
+    <ion-col col-md-6></ion-col>
+    <ion-list>
+      <ion-list-header>
+        Lista dei tuoi incontri giornalieri
+      </ion-list-header>
+
+      <ion-item *ngFor="let inc of incontri | async">
+        <ion-label>
+          <h2>Data incontro:</h2><h2>{{inc.data}}</h2> <h2> Orario: {{inc.ora}}</h2>
+          <h3>Luogo dell'incontro: {{inc.indirizzo}}</h3>
+          <p>Persona che incontrerai all'incontro: {{inc.emailUtente}}</p>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-col col-md-6></ion-col>
+  </ion-row>
+
   <ion-grid class = "griglia">
     <h1>Da quest'area potrai avere accesso a tutte le nostre funzionalità</h1>
     <ion-row>

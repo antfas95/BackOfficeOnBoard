@@ -1,98 +1,96 @@
 <ion-header>
     <ion-toolbar color = "primary">
-      <ion-icon name="arrow-back" (click)="goBack()" class = "dash"></ion-icon>
-      <ion-icon name="archive" (click)="goBack()" class = "dash"></ion-icon>
+      <ion-icon name="arrow-back" class = "dash"></ion-icon>
+      <ion-icon name="archive" class = "dash"></ion-icon>
       <ion-label class = "intestazione">Carica documento</ion-label>
     </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
-  <ion-card text-center *ngIf="!isUploading && !isUploaded" color = "primary">
-    <ion-row>
-      <ion-col col-md-6></ion-col>
-        <ion-icon horizontal = "center" name="document" class = "immagine"></ion-icon>
-      <ion-col col-md-6></ion-col>
-    </ion-row>
-    <ion-card-header>
-      <ion-card-title>Scegli il documento che vuoi caricare</ion-card-title>
-    </ion-card-header>
-    <ion-card-content>
-      <div class="fileUpload btn btn-primary">
-        <span>Upload</span>
-        <input
-          id="uploadBtn"
-          type="file"
-          class="upload"
-          (change)="uploadFile($event.target.files)"
-        />
-      </div>
-    </ion-card-content>
-  </ion-card>
-  <ion-card color = "primary" text-center *ngIf="isUploading && !isUploaded">
-    <ion-card-header>
-      <ion-card-title>File selezionato:<b>{{ fileName }}</b></ion-card-title>
-    </ion-card-header>
- 
-    <ion-card-content>
-      <div *ngIf="percentage | async as pct">
-        Caricamento: {{ pct | number }}%
-        <ion-progress-bar value="{{ pct / 100 }}"></ion-progress-bar>
-      </div>
-      <div *ngIf="snapshot | async as snap">
-        <div *ngIf="snapshot && snap.bytesTransferred != snap.totalBytes">
-          <ion-button
-            color="warning"
-            size="small"
-            (click)="task.pause()"
-            class="button is-warning">Pause</ion-button>
-          <ion-button
-            size="small"
-            (click)="task.resume()"
-            class="button is-info">Resume</ion-button>
-          <ion-button
-            color="danger"
-            size="small"
-            (click)="task.cancel()"
-            class="button is-danger">Cancel</ion-button>
+<ion-content>
+  <ion-list>
+  <ion-item text-center *ngFor="let item of images | async" [href]="item.filepath" target="_blank" rel="noopener">
+      <ion-thumbnail slot="start">  <img [src]="item.filepath" /> </ion-thumbnail>
+      <ion-item-sliding>
+        <ion-label color="primary">
+        <h2>{{ item.name }}</h2>
+        <p slot="start">{{item.description}}</p>
+        <p>Caricato da {{item.user}} il {{item.date}}</p>
+        <ion-badge *ngIf="item.approval==0"><ion-icon name="cloud-circle" color="primary"></ion-icon>Da backoffice</ion-badge>
+        <ion-badge *ngIf="item.approval==1"><ion-icon name="radio-button-on" color="warning"></ion-icon>In Esame</ion-badge>       
+        <ion-badge *ngIf="item.approval==2"><ion-icon name="radio-button-on" color="danger"></ion-icon>Non Approvato</ion-badge>      
+        <ion-badge *ngIf="item.approval==3"><ion-icon name="radio-button-on" color="success"></ion-icon>Approvato</ion-badge>
+        </ion-label>
+        </ion-item-sliding>
+    </ion-item>
+  </ion-list>
+
+    <ion-card text-center *ngIf="!isUploading && !isUploaded">
+      <ion-card-header>
+        <ion-card-title color="primary">Carica un File...</ion-card-title>
+      </ion-card-header>
+          <ion-input
+            id="uploadBtn"
+            type="file"
+            class="upload"
+            (change)="doConfirmDocument($event.target.files)"
+          >
+          </ion-input>
+    </ion-card>
+    <ion-card text-center *ngIf="isUploading && !isUploaded">
+      <ion-card-header>
+        <ion-card-title 
+          >File Selezionato:<b>{{ fileName }}</b></ion-card-title>
+      </ion-card-header>
+   
+      <ion-card-content>
+        <div *ngIf="percentage | async as pct">
+          Progress: {{ pct | number }}%
+          <ion-progress-bar value="{{ pct / 100 }}"></ion-progress-bar>
         </div>
-      </div>
-    </ion-card-content>
-  </ion-card>
-  <ion-card color = "primary" text-center *ngIf="!isUploading && isUploaded">
-    <ion-card-header>
-      <ion-card-title>
-        <b>{{ fileName }}</b> Caricato!
-      </ion-card-title>
-    </ion-card-header>
- 
-    <ion-card-content>
-      <div *ngIf="UploadedFileURL | async as url">
-        <ion-icon name="document"></ion-icon>
-        <a class = "linkcolor" [href]="url" target="_blank" rel="noopener">Download</a>
-      </div>
-      <ion-button
-        expand="full"
-        color="success"
-        (click)="isUploading = isUploaded = false">Carica altri documenti</ion-button>
-    </ion-card-content>
-  </ion-card>
- 
-  <h2 text-center>File che hai caricato</h2>
-  <ion-card class = "secondacard" text-center *ngFor="let item of images | async">
-    <ion-card-header>
-      <ion-card-title>
-        {{ item.name }}
-      </ion-card-title>
-    </ion-card-header>
- 
-    <ion-card-content>
-      <ion-icon name="document"></ion-icon>
-      <a [href]="item.filepath" target="_blank" rel="noopener">Download</a>
-    </ion-card-content>
-  </ion-card>
-  <ion-row>
-    <ion-col col-md-6></ion-col>
-    <ion-button color = "tertiary" (click)= "goBack()">Torna alla dashboard</ion-button>
-    <ion-col col-md-6></ion-col>
-  </ion-row>
-</ion-content>
+        <div *ngIf="snapshot | async as snap">
+          <div *ngIf="snapshot && snap.bytesTransferred != snap.totalBytes">
+            <ion-button
+              color="warning"
+              size="small"
+              (click)="task.pause()"
+              class="button is-warning"
+              >Pause</ion-button
+            >
+            <ion-button
+              size="small"
+              (click)="task.resume()"
+              class="button is-info"
+              >Resume</ion-button
+            >
+            <ion-button
+              color="danger"
+              size="small"
+              (click)="task.cancel()"
+              class="button is-danger"
+              >Cancel</ion-button
+            >
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <ion-card text-center *ngIf="!isUploading && isUploaded">
+      <ion-card-header>
+        <ion-card-content>
+          <div *ngIf="UploadedFileURL | async as url">
+            <img [src]="url" />
+            <a [href]="url" target="_blank" rel="noopener">Download</a>
+          </div>
+          <ion-button
+            expand="full"
+            color="success"
+            (click)="isUploading = isUploaded = false"
+            >Effettua un altro upload</ion-button
+          >
+        </ion-card-content>
+        <ion-card-title>
+          <p>{{ fileName }}</p> <p>Caricato con Successo!</p>
+        </ion-card-title>
+      </ion-card-header>
+   
+    </ion-card>

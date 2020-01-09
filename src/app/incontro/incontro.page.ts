@@ -9,6 +9,7 @@ import { Incontro } from '../models/Incontro';
 import { Indirizzi } from '../models/Indirizzi';
 import { IndirizziService } from '../services/indirizzi.service';
 import { Observable } from 'rxjs';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-incontro',
@@ -17,6 +18,7 @@ import { Observable } from 'rxjs';
 })
 export class IncontroPage implements OnInit {
 
+  emailAuth: string;
   valorericerca: string;
   items: Observable<Utente[]>;
   referenti: Observable<Referente[]>;
@@ -37,7 +39,7 @@ export class IncontroPage implements OnInit {
   };
 
   // tslint:disable-next-line: max-line-length
-  constructor(public router: Router, public uS: UtenteService, public iS: IncontroService, public rS: ReferenteService, public indirizzoService: IndirizziService) {
+  constructor(public router: Router, public uS: UtenteService, public iS: IncontroService, public rS: ReferenteService, public indirizzoService: IndirizziService, private authService: AuthenticationService) {
     this.valorericerca = '';
     this.cityMeeting = '';
     this.ricercaSede = false;
@@ -45,6 +47,9 @@ export class IncontroPage implements OnInit {
   }
 
   ngOnInit() {
+    // Funziona solo se effettuo la sessione
+    // this.emailAuth = this.authService.userDetails().email;
+    console.log ('Cerco di prendere il valore utente autenticato nel sistema: ' + this.emailAuth);
     console.log ('Effettuo la query');
     this.ricercaFatta = false;
     this.ricercaSede = false;
@@ -80,7 +85,7 @@ export class IncontroPage implements OnInit {
     this.incontro.ora = this.incontro.data.toString().substring(11, 16);
     this.incontro.data = this.incontro.data.toString().substring(0, 10);
     console.log('Ora Incontro: ' + this.incontro.ora);
-    const ritorno = this.iS.addIncontro(this.incontro);
+    const ritorno = this.iS.addIncontro(this.incontro, this.emailAuth);
     console.log ('Ecco il ritorno: ' + ritorno);
     // this.vistaAnnunciInseriti();
   }
@@ -100,8 +105,5 @@ export class IncontroPage implements OnInit {
   effettuaProve() {
     this.incontri = this.iS.getIncontri();
     console.log ('Ecco le sedi' + this.sedi + 'Ecco la città: ' + this.cityMeeting);
-  }
-
-  getIncontri() {
   }
 }
