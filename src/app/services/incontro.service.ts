@@ -39,6 +39,15 @@ export class IncontroService {
   }
 
   getIncontri() {
+    this.items = this.afs.collection('users').doc(this.email).collection('incontro').snapshotChanges().pipe( map (changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Incontro;
+        data.id = a.payload.doc.id;
+        //console.log('Ecco il valore della a che mi serve: ' + data.id);
+        return data;
+      });
+    })
+  );
     return this.items;
   }
 
