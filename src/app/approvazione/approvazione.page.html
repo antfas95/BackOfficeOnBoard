@@ -1,14 +1,28 @@
 <ion-header>
   <ion-toolbar color = "primary">
-    <ion-icon name="arrow-back" (click)="goBack()" class = "dash"></ion-icon>
-    <ion-icon name="filing" (click)="goBack()" class = "dash"></ion-icon>
-    <ion-label class = "intestazione">Approva utente</ion-label>
+    <ion-buttons>
+      <ion-button (click)= "goBack()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="secondary">
+      <ion-button (click) = "otherFunction()">
+        <ion-icon slot="icon-only" name="cog"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title text-center>Dashboard</ion-title>
+
+    <ion-buttons slot="primary">
+      <ion-button (click) = "logout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 <ion-card class = "cardcompleta" color = "primary">
-  <h1>Documenti da approvare</h1>
   <ion-grid>
     <ion-row>
       <ion-col col-md-6></ion-col>
@@ -18,42 +32,31 @@
     <ion-row>
       <ion-col col-md-4></ion-col>
       <ion-col col-md-4>
-        <ion-list>
-          <ion-item>
-            <ion-avatar slot="start">
-                <ion-icon name="clipboard" class = "photo"></ion-icon>
-            </ion-avatar>
-            <ion-label>
-              <h2>Nome Cognome</h2>
-            </ion-label>
-            <ion-button color = "success">Approva</ion-button>
-            <ion-button color = "tertiary">Rigetta</ion-button>
-          </ion-item>
-          <ion-item>
-              <ion-avatar slot="start">
-                  <ion-icon name="image" class = "photo"></ion-icon>
-              </ion-avatar>
-              <ion-label>
-                <h2>Nome Cognome</h2>
-              </ion-label>
-              <ion-button color = "success">Approva</ion-button>
-              <ion-button color = "tertiary">Rigetta</ion-button>
-          </ion-item>
-          <ion-item>
-              <ion-avatar slot="start">
-                  <ion-icon name="image" class = "photo"></ion-icon>
-              </ion-avatar>
-              <ion-label>
-                <h2>Nome Cognome</h2>
-              </ion-label>
-              <ion-button color = "success">Approva</ion-button>
-              <ion-button color = "tertiary">Rigetta</ion-button>
-          </ion-item>
-        </ion-list>
-        <ion-button expand = "full" color = "tertiary" (click) = "goBack()">Torna Indietro</ion-button>
+        <ion-row>
+          <ion-searchbar (click)="effettuaRicerca()" [(ngModel)] = "valorericerca" placeholder = "ricerca utente"></ion-searchbar>
+        </ion-row>
       </ion-col>
       <ion-col col-md-4></ion-col>
     </ion-row>
   </ion-grid>
 </ion-card>
+<ion-list>
+  <ion-item text-center *ngFor="let item of images | async">
+      <ion-thumbnail slot="start">  <img [src]="item.filepath" /> </ion-thumbnail>
+      <ion-item-sliding>
+        <ion-label>
+        <h2>{{ item.name }}</h2>
+        <p class = "paragrafo" slot="start">{{item.description}}</p>
+        <p class = "paragrafo">Caricato da {{item.user}} il {{item.date}}</p>
+        <ion-badge *ngIf="item.approval==0"><ion-icon name="cloud-circle" color="primary"></ion-icon>Da backoffice</ion-badge>
+        <ion-badge *ngIf="item.approval==1"><ion-icon name="radio-button-on" color="warning"></ion-icon>In Esame</ion-badge>       
+        <ion-badge *ngIf="item.approval==2"><ion-icon name="radio-button-on" color="danger"></ion-icon>Non Approvato</ion-badge>      
+        <ion-badge *ngIf="item.approval==3"><ion-icon name="radio-button-on" color="success"></ion-icon>Approvato</ion-badge>
+        </ion-label>
+        </ion-item-sliding>
+        <ion-button color = "success" (click) = "approvaDomanda(item)">Approva</ion-button>
+        <ion-button color = "tertiary" (click) = "rigettaDomanda(item)">Rigetta</ion-button>
+        <ion-button color = "secondary" [href]="item.filepath" target="_blank" rel="noopener">Scarica</ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>

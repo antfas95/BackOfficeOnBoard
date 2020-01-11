@@ -18,6 +18,7 @@ export class AuthenticationService {
    }
 
    loginUser(value) {
+     console.log("Richiesta di login: " + value.email);
     return new Promise<any>((resolve, reject) => {
       firebase.auth().signInWithEmailAndPassword(value.email, value.password)
       .then(
@@ -41,6 +42,11 @@ export class AuthenticationService {
   }
 
   userDetails() {
+    console.log('Login Success ' + firebase.auth().currentUser);
     return firebase.auth().currentUser;
+  }
+
+  isLogged() {
+    return firebase.auth();
   }
 }

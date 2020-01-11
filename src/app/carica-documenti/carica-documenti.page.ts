@@ -5,8 +5,10 @@ import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/fire
 import { Observable } from 'rxjs';
 import { finalize, tap } from 'rxjs/operators';
 import { AuthenticationService } from '../services/authentication.service';
+import { Router } from '@angular/router';
 
 export interface MyData {
+  id?: string;
   name: string;
   user: string;
   filepath: string;
@@ -14,6 +16,7 @@ export interface MyData {
   date: string;
   approval: number;
   description: string;
+  type: string;
 }
 
 @Component({
@@ -53,15 +56,15 @@ export class CaricaDocumentiPage {
 
   private imageCollection: AngularFirestoreCollection<MyData>;
 
+  type: string;
   // tslint:disable-next-line: max-line-length
-  constructor(public alertCtrl: AlertController, private storage: AngularFireStorage, private authService: AuthenticationService , private database: AngularFirestore) {
-                this.isUploading = false;
-                this.isUploaded = false;
-                this.user = this.authService.userDetails().email;
-                // Set collection where our documents/ images info will save
-                this.imageCollection = database.collection<MyData>(this.user);
-                this.images = this.imageCollection.valueChanges();
-
+  constructor(public router: Router, public alertCtrl: AlertController, private storage: AngularFireStorage, private authService: AuthenticationService , private database: AngularFirestore) {
+    this.isUploading = false;
+    this.isUploaded = false;
+    this.user = this.authService.userDetails().email;
+    // Set collection where our documents/ images info will save
+    this.imageCollection = database.collection<MyData>(this.user);
+    this.images = this.imageCollection.valueChanges();
   }
 
   async presentAlert(message: string) {
@@ -113,31 +116,33 @@ async doConfirmDocument(event: FileList) {
             || file.type === 'application/pdf'
             || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
             ) {
-            this.isUploading = true;
-            this.isUploaded = false;
+              this.type = file.type.split('/')[0];
+              console.log(this.type);
+              this.isUploading = true;
+              this.isUploaded = false;
 
             // Boolean Flag pre approval Document
-            this.approval = 1;
+            this.approval = 0;
 
             // File Name
-            this.fileName = file.name;
+              this.fileName = file.name;
 
             // The storage path
-            const path = this.user + `/${new Date().getTime()}_${file.name}`;
+              const path = this.user + `/${new Date().getTime()}_${file.name}`;
 
 
             // Totally optional metadata
-            const customMetadata = { app: this.user + ' Upload Demo' };
+              const customMetadata = { app: this.user + ' Upload Demo' };
 
             // File reference
-            const fileRef = this.storage.ref(path);
+              const fileRef = this.storage.ref(path);
 
             // The main task
-            this.task = this.storage.upload(path, file, { customMetadata });
+              this.task = this.storage.upload(path, file, { customMetadata });
 
             // Get file progress percentage
-            this.percentage = this.task.percentageChanges();
-            this.snapshot = this.task.snapshotChanges().pipe(
+              this.percentage = this.task.percentageChanges();
+              this.snapshot = this.task.snapshotChanges().pipe(
               finalize(() => {
                 // Get uploaded file storage path
                 this.UploadedFileURL = fileRef.getDownloadURL();
@@ -150,7 +155,8 @@ async doConfirmDocument(event: FileList) {
                     size: this.fileSize,
                     date: this.date,
                     approval: this.approval,
-                    description: this.description
+                    description: this.description,
+                    type: this.type
                   });
                   this.isUploading = false;
                   this.isUploaded = true;
@@ -175,16 +181,36 @@ async doConfirmDocument(event: FileList) {
   (await confirm).present();
 }
 
-
   addImagetoDB(image: MyData) {
     // Create an ID for document
-    const id = this.database.createId();
+    image.id = this.database.createId();
 
     // Set document id with value in database
-    this.imageCollection.doc(id).set(image).then(resp => {
+    this.imageCollection.doc(image.id).set(image).then(resp => {
       console.log(resp);
     }).catch(error => {
       console.log('error ' + error);
     });
+  }
+
+  goBack() {
+    this.router.navigate(['dashboard-def']);
+  }
+
+  async presentAlert1(message: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Funzionalità',
+      message: '' + message,
+      buttons: ['Conferma']
+    });
+    alert.present();
+  }
+
+  otherFunction() {
+    this.presentAlert1 ('Funzione ancora non implementata');
+  }
+
+  logout() {
+    this.authService.logoutUser();
   }
 }

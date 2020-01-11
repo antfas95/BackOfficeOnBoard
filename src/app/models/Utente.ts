@@ -8,4 +8,5 @@ export interface Utente {
     sesso?: string;
     cittàNascita?: string;
     indirizzo?: string;
+    stato?: boolean;
 }

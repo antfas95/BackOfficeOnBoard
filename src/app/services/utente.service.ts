@@ -10,6 +10,9 @@ import { Utente } from '../models/Utente';
 })
 export class UtenteService {
 
+  // Variabile che mi permette di verificare la presenza dell'utente nel DB
+  presenza: boolean;
+
   email: string;
 
   itemsCollections: AngularFirestoreCollection<Utente>;
@@ -76,4 +79,22 @@ export class UtenteService {
     console.log ('Elimino utente: ' + utente.id);
     this.itemsCollections.doc(utente.id).delete();
   }
+
+  getUtentePresenzaDb(email: string) {
+    this.itemsCollections.doc(email).get().toPromise()
+    .then(doc => {
+        if (!doc.exists) {
+          console.log ('Non ci sono incontriiiiiiiii');
+          this.presenza = false;
+        } else {
+          console.log ('Ci sono incontriiii');
+          this.presenza = true;
+        }
+      })
+      .catch(err => {
+        console.log('Error getting document', err);
+        return false;
+      });
+    return this.presenza;
+   }
 }

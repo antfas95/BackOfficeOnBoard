@@ -1,17 +1,33 @@
 <ion-header>
-    <ion-toolbar color = "primary">
-      <ion-icon name="arrow-back" class = "dash"></ion-icon>
-      <ion-icon name="archive" class = "dash"></ion-icon>
-      <ion-label class = "intestazione">Carica documento</ion-label>
-    </ion-toolbar>
+  <ion-toolbar color = "primary">
+    <ion-buttons>
+      <ion-button (click)= "goBack()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="secondary">
+      <ion-button (click) = "otherFunction()">
+        <ion-icon slot="icon-only" name="cog"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <ion-title text-center>Inserisci documento</ion-title>
+
+    <ion-buttons slot="primary">
+      <ion-button (click) = "logout()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <ion-list>
   <ion-item text-center *ngFor="let item of images | async" [href]="item.filepath" target="_blank" rel="noopener">
-      <ion-thumbnail slot="start">  <img [src]="item.filepath" /> </ion-thumbnail>
+      <ion-thumbnail slot="start" *ngIf="item.type=='image'">  <img [src]="item.filepath" /> </ion-thumbnail>
+      <ion-thumbnail slot="start" *ngIf="item.type=='application'"> <img src="assets/img/pdf.png" /> </ion-thumbnail>
       <ion-item-sliding>
-        <ion-label color="primary">
+        <ion-label>
         <h2>{{ item.name }}</h2>
         <p slot="start">{{item.description}}</p>
         <p>Caricato da {{item.user}} il {{item.date}}</p>
@@ -26,7 +42,7 @@
 
     <ion-card text-center *ngIf="!isUploading && !isUploaded">
       <ion-card-header>
-        <ion-card-title color="primary">Carica un File...</ion-card-title>
+        <ion-card-title>Carica un File...</ion-card-title>
       </ion-card-header>
           <ion-input
             id="uploadBtn"

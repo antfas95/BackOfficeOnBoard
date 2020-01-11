@@ -10,9 +10,14 @@ import { Incontro } from '../models/Incontro';
 })
 export class IncontroService {
 
+  //Presenza incontri
+  presenza: boolean;
+
   // Variabili per inserimento dell'incotro all'interno della collezione dei referenti
   itemsCollectionsReferenti: AngularFirestoreCollection<Incontro>;
   itemsReferenti: Observable<Incontro[]>;
+  dataGenerata: Date;
+  chiaveRicerca: string;
 
   // Varibili per inserimento dell'incontro all'interno della collezione degli utenti
   itemsCollections: AngularFirestoreCollection<Incontro>;
@@ -30,7 +35,7 @@ export class IncontroService {
       return changes.map(a => {
         const data = a.payload.doc.data() as Incontro;
         data.id = a.payload.doc.id;
-        //console.log('Ecco il valore della a che mi serve: ' + data.id);
+        // console.log('Ecco il valore della a che mi serve: ' + data.id);
         return data;
       });
     })
@@ -40,7 +45,7 @@ export class IncontroService {
     return changes.map(a => {
       const data = a.payload.doc.data() as Incontro;
       data.id = a.payload.doc.id;
-      //console.log('Ecco il valore della a che mi serve: ' + data.id);
+      // console.log('Ecco il valore della a che mi serve: ' + data.id);
       return data;
     });
   })
@@ -65,8 +70,11 @@ export class IncontroService {
   }
 
   getIncontriByReferenti(email: string) {
+    console.log ('Mi trovo nel metodo che mi ritorna gli incontri associati' + this.email);
+    this.dataGenerata = new Date ();
+    this.chiaveRicerca = this.dataGenerata.toISOString().substring(0, 10);
     console.log ('Mi trovo nel metodo con i seguenti valori da ritornare: ' + email);
-    this.itemsReferenti = this.afs.collection('referenti').doc(email).collection('incontro').snapshotChanges().pipe( map (changes => {
+    this.itemsReferenti = this.afs.collection('referenti').doc(email).collection('incontro', ref => ref.orderBy('ora', 'asc').where('data', '==', this.chiaveRicerca)).snapshotChanges().pipe( map (changes => {
       return changes.map(a => {
         const data = a.payload.doc.data() as Incontro;
         data.id = a.payload.doc.id;
@@ -100,4 +108,22 @@ export class IncontroService {
     return a;
     */
   }
+
+  getIncontriInfo(email: string) {
+    this.itemsCollectionsReferenti.doc(email).get().toPromise()
+    .then(doc => {
+        if (!doc.exists) {
+          console.log ('Non ci sono incontriiiiiiiii');
+          this.presenza = false;
+        } else {
+          console.log ('Ci sono incontriiii');
+          this.presenza = true;
+        }
+      })
+      .catch(err => {
+        console.log('Error getting document', err);
+        return false;
+      });
+    return this.presenza;
+   }
 }

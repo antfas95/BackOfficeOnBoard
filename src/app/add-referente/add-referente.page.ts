@@ -5,6 +5,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { NavController } from '@ionic/angular';
 import { ReferenteService } from '../services/referente.service';
 import { Referente } from '../models/Referente';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-add-referente',
@@ -81,10 +82,46 @@ export class AddReferentePage implements OnInit {
     ],
   };
 
+  emailAuth: string;
+  user: any;
   // tslint:disable-next-line: max-line-length
-  constructor(public router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder, public itemService: ReferenteService) { }
+  constructor(public alertCtrl: AlertController, public router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder, public itemService: ReferenteService) {
+    this.user = this.authService.userDetails();
+
+    if (this.user) {
+        // User is signed in.
+        console.log ('Utente loggato');
+        this.emailAuth = this.authService.userDetails().email;
+      } else {
+        console.log ('Utente non loggato ');
+        this.reload();
+        //this.authService.logoutUser();
+        //this.router.navigate(['home']);
+        // No user is signed in.
+    }
+  }
+
+  reload() {
+    this.authService.logoutUser();
+    this.router.navigate(['home']);
+  }
 
   ngOnInit() {
+    /*
+    var user = firebase.auth().currentUser;
+    if (user) {
+      this.emailAuth = this.authService.userDetails().email;
+      console.log ("Ecco emailAutenticazione: " + this.emailAuth);
+      console.log ('Ecco la stringa che viene ritornata: ' + this.authService.userDetails());
+      console.log ('Utente loggato');
+      console.log ('Ecco utente passato: ' + this.emailAuth);
+      this.incontri = this.iS.getIncontriByReferenti(this.emailAuth);
+      this.count = this.iS.getIncontriInfo(this.emailAuth);
+    } else {
+      this.router.navigate(['home']);
+      console.log ('Utente non loggato');
+    }
+    */
     this.validations_form = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
@@ -158,6 +195,7 @@ export class AddReferentePage implements OnInit {
        this.referente.cittàNascita = this.cittanascita;
        this.referente.datanascita = this.datanascita.toString().substring(0, 10);
        this.itemService.addReferente(this.referente);
+       this.presentAggiunta ('Aggiunto con successo il referente: ' + this.referente.email);
        this.referente.nome = '';
        this.referente.cognome = '';
        this.referente.indirizzo = '';
@@ -180,5 +218,31 @@ export class AddReferentePage implements OnInit {
 
   goLoginPage() {
     this.navCtrl.navigateBack('');
+  }
+
+  logout() {
+    this.authService.logoutUser();
+  }
+
+  otherFunction() {
+    this.presentAlert ('Funzione ancora non implementata');
+  }
+
+  async presentAlert(message: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Funzionalità mancante',
+      message: '' + message,
+      buttons: ['Conferma']
+    });
+    alert.present();
+  }
+
+  async presentAggiunta(message: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Aggiunta referente',
+      message: '' + message,
+      buttons: ['Conferma']
+    });
+    alert.present();
   }
 }

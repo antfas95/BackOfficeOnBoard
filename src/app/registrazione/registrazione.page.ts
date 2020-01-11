@@ -5,6 +5,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { NavController } from '@ionic/angular';
 import { UtenteService } from '../services/utente.service';
 import { Utente } from '../models/Utente';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-registrazione',
@@ -28,6 +29,7 @@ export class RegistrazionePage implements OnInit {
     sesso: '',
     cittàNascita: '',
     indirizzo: '',
+    stato: false,
   };
 
   //Variabili utili per l'autentcicazione
@@ -74,9 +76,32 @@ export class RegistrazionePage implements OnInit {
     ],
   };
 
+  user: any;
+  emailAuth: string;
+
   // tslint:disable-next-line: max-line-length
-  constructor(public router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder, public itemService: UtenteService) { }
-  
+  constructor(public alertCtrl: AlertController, public router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder, public itemService: UtenteService) {
+    this.user = this.authService.userDetails();
+
+    if (this.user) {
+        // User is signed in.
+        console.log ('Utente loggato');
+        this.emailAuth = this.authService.userDetails().email;
+      } else {
+        console.log ('Utente non loggato ');
+        this.reload();
+        //this.authService.logoutUser();
+        //this.router.navigate(['home']);
+        // No user is signed in.
+      }
+    //this.reload();
+   }
+
+   reload() {
+    this.authService.logoutUser();
+    this.router.navigate(['home']);
+   }
+   
   ngOnInit() {
     this.validations_form = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
@@ -178,5 +203,23 @@ export class RegistrazionePage implements OnInit {
     console.log("Questa in teoria dovrebbe essere la data di oggi" + date.detail.value);
     console.log("Questa è la data inserita da me: " + this.mydate);
     console.log ("Valore associato alla mia data di nascita: " + this.datanascita.toString());
+  }
+
+  async presentAlert(message: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Compila il form correttamente',
+      message: 'Non hai inserito ' + message,
+      buttons: ['Conferma']
+    });
+    alert.present();
+  }
+
+  otherFunction() {
+    this.presentAlert ('Funzione ancora non implementata');
+  }
+
+  logout() {
+    this.authService.logoutUser();
+    this.router.navigate (['home']);
   }
 }
