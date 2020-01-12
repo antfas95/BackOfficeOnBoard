@@ -79,6 +79,10 @@
                   </ion-select>
                 </ion-item>
                 <ion-item>
+                  <ion-label position = "floating" color = primary>Residenza</ion-label>
+                  <ion-input type = "text" [(ngModel)]="utente.residenza" formControlName= "residenza"></ion-input>
+                </ion-item>
+                <ion-item>
                   <ion-label position = "floating" color = primary>Indirizzo</ion-label>
                   <ion-input [(ngModel)]="utente.indirizzo" type = "text" formControlName= "indirizzo"></ion-input>
                 </ion-item>

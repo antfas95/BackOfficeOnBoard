@@ -45,8 +45,8 @@ export class DashboardDefPage implements OnInit {
    reload() {
     console.log ('Mi trovo nel reload' + this.emailAuth);
     this.incontri = this.iS.getIncontriByReferenti(this.emailAuth);
-    this.count = this.iS.getIncontriInfo(this.emailAuth);
-    console.log ('Ecco il ritorno di riferimento: ' + this.count);
+    // this.count = this.iS.getIncontriInfo(this.emailAuth);
+    // console.log ('Ecco il ritorno di riferimento: ' + this.count);
    }
 
   ngOnInit() {

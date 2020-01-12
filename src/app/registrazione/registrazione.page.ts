@@ -28,6 +28,7 @@ export class RegistrazionePage implements OnInit {
     codice_fiscale: '',
     sesso: '',
     cittàNascita: '',
+    residenza: '',
     indirizzo: '',
     stato: false,
   };
@@ -67,6 +68,9 @@ export class RegistrazionePage implements OnInit {
     ],
     'citta': [
       { type: 'required', message: 'La città è un campo obbligatorio' },
+    ],
+    'residenza': [
+      { type: 'required', message: 'La residenza è un campo obbligatorio' },
     ],
     'sesso': [
       { type: 'required', message: 'Il sesso è un campo obbligatorio' },
@@ -132,6 +136,8 @@ export class RegistrazionePage implements OnInit {
       ])),
       citta: new FormControl('', Validators.compose([
       ])),
+      residenza: new FormControl('', Validators.compose([
+      ])),
       sesso: new FormControl('', Validators.compose([
         Validators.required,
       ])),
@@ -158,12 +164,28 @@ export class RegistrazionePage implements OnInit {
     this.utente.indirizzo = '';
     this.utente.codice_fiscale = '';
     this.utente.cittàNascita = '';
+    this.utente.residenza = '';
     this.utente.sesso = '';
     this.cittanascita = '';
     this.utente.email = '';
   }
 
   tryRegister(value) {
+    this.errorMessage = '';
+    this.successMessage = 'Il tuo account è stato correttamente creato prova a loggarti';
+    this.utente.datanascita = this.datanascita.toString().substring(0, 10);
+    this.utente.cittàNascita = this.cittanascita;
+    this.itemService.addCliente(this.utente);
+    this.utente.nome = '';
+    this.utente.cognome = '';
+    this.utente.indirizzo = '';
+    this.utente.codice_fiscale = '';
+    this.utente.cittàNascita = '';
+    this.utente.residenza = '';
+    this.utente.sesso = '';
+    this.cittanascita = '';
+    this.utente.email = '';
+    /*
     this.authService.registerUser(value)
      .then(res => {
        console.log(res);
@@ -185,6 +207,7 @@ export class RegistrazionePage implements OnInit {
        this.errorMessage = err.message;
        this.successMessage = '';
      });
+     */
   }
 
   goLoginPage() {

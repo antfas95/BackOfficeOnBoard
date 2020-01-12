@@ -7,6 +7,7 @@ export interface Utente {
     codice_fiscale?: string;
     sesso?: string;
     cittàNascita?: string;
+    residenza?: string;
     indirizzo?: string;
     stato?: boolean;
 }

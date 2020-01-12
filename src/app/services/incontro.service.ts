@@ -27,6 +27,7 @@ export class IncontroService {
   email: string;
 
   constructor(public afDatabase: AngularFireDatabase, public afs: AngularFirestore) {
+    this.presenza = false;
     console.log('Mi trovo nel metodo costruttore');
     this.itemsCollections = this.afs.collection<Incontro>('users', ref => ref.orderBy('data', 'asc'));
     this.itemsCollectionsReferenti = this.afs.collection<Incontro>('referenti', ref => ref.orderBy('data', 'asc'));
@@ -70,7 +71,8 @@ export class IncontroService {
   }
 
   getIncontriByReferenti(email: string) {
-    console.log ('Mi trovo nel metodo che mi ritorna gli incontri associati' + this.email);
+    this.itemsReferenti = null;
+    console.log ('Mi trovo nel metodo che mi ritorna gli incontri associatiii' + this.itemsReferenti);
     this.dataGenerata = new Date ();
     this.chiaveRicerca = this.dataGenerata.toISOString().substring(0, 10);
     console.log ('Mi trovo nel metodo con i seguenti valori da ritornare: ' + email);
@@ -119,11 +121,14 @@ export class IncontroService {
           console.log ('Ci sono incontriiii');
           this.presenza = true;
         }
+        console.log ('Ecco il valore di ritorn: ' + this.presenza);
+        return this.presenza;
       })
       .catch(err => {
         console.log('Error getting document', err);
         return false;
       });
+    console.log ('Ecco il valore di ritorn: ' + this.presenza);
     return this.presenza;
    }
 }
