@@ -82,11 +82,14 @@ export class RegistrazionePage implements OnInit {
 
   user: any;
   emailAuth: string;
+  password: string;
+  password1: string;
 
   // tslint:disable-next-line: max-line-length
   constructor(public alertCtrl: AlertController, public router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder, public itemService: UtenteService) {
     this.user = this.authService.userDetails();
 
+    
     if (this.user) {
         // User is signed in.
         console.log ('Utente loggato');
@@ -175,18 +178,20 @@ export class RegistrazionePage implements OnInit {
     this.successMessage = 'Il tuo account è stato correttamente creato prova a loggarti';
     this.utente.datanascita = this.datanascita.toString().substring(0, 10);
     this.utente.cittàNascita = this.cittanascita;
-    this.itemService.addCliente(this.utente);
-    this.utente.nome = '';
-    this.utente.cognome = '';
-    this.utente.indirizzo = '';
-    this.utente.codice_fiscale = '';
-    this.utente.cittàNascita = '';
-    this.utente.residenza = '';
-    this.utente.sesso = '';
-    this.cittanascita = '';
-    this.utente.email = '';
-    /*
-    this.authService.registerUser(value)
+    if (this.password === this.password1) {
+      this.itemService.addCliente(this.utente);
+      this.utente.nome = '';
+      this.utente.cognome = '';
+      this.utente.indirizzo = '';
+      this.utente.codice_fiscale = '';
+      this.utente.cittàNascita = '';
+      this.utente.residenza = '';
+      this.utente.sesso = '';
+      this.cittanascita = '';
+      this.utente.email = '';
+      this.password = '';
+      this.password1 = '';
+      this.authService.registerUser(value)
      .then(res => {
        console.log(res);
        this.errorMessage = '';
@@ -207,7 +212,9 @@ export class RegistrazionePage implements OnInit {
        this.errorMessage = err.message;
        this.successMessage = '';
      });
-     */
+    } else {
+      this.passwordDiverse('Password e Conferma password non coincidono');
+    }
   }
 
   goLoginPage() {
@@ -232,6 +239,15 @@ export class RegistrazionePage implements OnInit {
     const alert = await this.alertCtrl.create({
       header: 'Compila il form correttamente',
       message: 'Non hai inserito ' + message,
+      buttons: ['Conferma']
+    });
+    alert.present();
+  }
+
+  async passwordDiverse(message: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Compila il form correttamente',
+      message: '' + message,
       buttons: ['Conferma']
     });
     alert.present();

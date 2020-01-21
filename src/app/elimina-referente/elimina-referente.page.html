@@ -1,28 +1,29 @@
 <ion-header>
-  <ion-toolbar color = "primary">
+  <ion-toolbar color = "secondary">
     <ion-buttons>
       <ion-button (click)= "goBack()">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="secondary">
-      <ion-button (click) = "otherFunction()">
-        <ion-icon slot="icon-only" name="cog"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-
-    <ion-title text-center>Elimina referente</ion-title>
-
-    <ion-buttons slot="primary">
-      <ion-button (click) = "logout()">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title text-center>Elimina Referente</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card class = "cardcompleta" color = "primary">
+  <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
+    <ion-fab-button color= "tertiary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list>
+      <ion-fab-button color="light" (click)="otherFunction()">
+        <ion-icon name="cog"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  <ion-card class = "cardcompleta" color = "secondary">
     <ion-grid>
       <ion-row>
         <ion-col col-md-6></ion-col>
@@ -49,7 +50,7 @@
             <p>Cognome:</p> {{item.cognome}}
             <p>Codice fiscale:</p> {{item.codice_fiscale}}
             <p>Indirizzo:</p> {{item.indirizzo}}
-            <ion-button (click)= "eliminaUtente(item)" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Conferma eliminazione</ion-button>
+            <ion-button (click)= "eliminaUtente(item)" expand = "full" color = "secondary" fill = "solid" shape = "round" size = "large">Conferma eliminazione</ion-button>
             <a class = "link" (click)="goBack()">Clicca qui per annullare l'operazione</a>
           </ion-col>
     <ion-col col-md-6></ion-col>

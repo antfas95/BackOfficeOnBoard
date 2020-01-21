@@ -1,25 +1,155 @@
 <ion-header>
-  <ion-toolbar color = "primary">
+  <ion-toolbar color = "secondary">
     <ion-buttons>
       <ion-button (click)= "goBack()">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="secondary">
-      <ion-button (click) = "otherFunction()">
-        <ion-icon slot="icon-only" name="cog"></ion-icon>
-      </ion-button>
-    </ion-buttons>
 
-    <ion-title text-center>Dashboard</ion-title>
-
-    <ion-buttons slot="primary">
-      <ion-button (click) = "logout()">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title text-center>Registrazione Utente</ion-title>
   </ion-toolbar>
 </ion-header>
+
+<ion-content>
+  <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
+    <ion-fab-button color= "tertiary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list>
+      <ion-fab-button color="light" (click)="otherFunction()">
+        <ion-icon name="cog"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  <ion-row>
+    <ion-col size-md="2">
+    </ion-col>
+    <ion-col size-md="8">
+      <p>Registra nuovo utente</p>
+      <form class="form" [formGroup]="validations_form"  (ngSubmit)="tryRegister(validations_form.value)">
+        <ion-item>
+          <ion-label position = "floating" color = secondary>Nome</ion-label>
+          <ion-input type = "text" [(ngModel)]="utente.nome" formControlName= "nome"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.nome">
+            <div class="error-message" *ngIf="validations_form.get('nome').hasError(validation.type) && (validations_form.get('nome').dirty || validations_form.get('nome').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <ion-item>
+          <ion-label position = "floating" color = secondary>Cognome</ion-label>
+          <ion-input type = "text" [(ngModel)]="utente.cognome" formControlName= "cognome"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.cognome">
+            <div class="error-message" *ngIf="validations_form.get('cognome').hasError(validation.type) && (validations_form.get('cognome').dirty || validations_form.get('cognome').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <ion-item>
+          <ion-label color = secondary>Data di nascita</ion-label>
+          <ion-datetime [(ngModel)]="datanascita" formControlName= "nascita" value="1990-02-19" placeholder="Seleziona la data" (ionChange)= "dataChanged($event)"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label position = "floating" color = secondary>Codice Fiscale</ion-label>
+          <ion-input type = "text" [(ngModel)]="utente.codice_fiscale" formControlName= "codfiscale" ></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.codfiscale">
+            <div class="error-message" *ngIf="validations_form.get('codfiscale').hasError(validation.type) && (validations_form.get('codfiscale').dirty || validations_form.get('codfiscale').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <ion-item>
+          <ion-label color = secondary>Città di nascita</ion-label>
+          <ion-select ok-text="Seleziona" cancel-text="Annulla" [(ngModel)]="cittanascita" formControlName= "citta">
+            <ion-select-option value="napoli">Napoli</ion-select-option>
+            <ion-select-option value="avellino">Avellino</ion-select-option>
+            <ion-select-option value="nola">Nola</ion-select-option>
+            <ion-select-option value="milano">Milano</ion-select-option>
+            <ion-select-option value="roma">Roma</ion-select-option>
+            <ion-select-option value="sarno">Sarno</ion-select-option>
+            <ion-select-option value="cicciano">Cicciano</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label position = "floating" color = secondary>Residenza</ion-label>
+          <ion-input type = "text" [(ngModel)]="utente.residenza" formControlName= "residenza"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label color = secondary position = "floating">Indirizzo</ion-label>
+          <ion-input [(ngModel)]="utente.indirizzo" type = "text" formControlName= "indirizzo"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.indirizzo">
+            <div class="error-message" *ngIf="validations_form.get('indirizzo').hasError(validation.type) && (validations_form.get('indirizzo').dirty || validations_form.get('indirizzo').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <ion-radio-group [(ngModel)]="utente.sesso" formControlName= "sesso">
+          <ion-list-header>
+            <ion-label color = secondary>Sesso</ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-label>Maschio</ion-label>
+            <ion-radio slot="start" value="maschio" checked></ion-radio>
+          </ion-item>
+          <ion-item>
+            <ion-label>Femmina</ion-label>
+            <ion-radio slot="start" value="femmina"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+        <ion-item>
+          <ion-label  position="floating" color="secondary">Email</ion-label>
+          <ion-input [(ngModel)]="utente.email" type="text" formControlName="email"></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.email">
+            <div class="error-message" *ngIf="validations_form.get('email').hasError(validation.type) && (validations_form.get('email').dirty || validations_form.get('email').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <ion-item>
+          <ion-label  position="floating" color="secondary">Password</ion-label>
+          <ion-input [(ngModel)]="password" type="password" formControlName="password" class="form-controll" required></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.password">
+            <div class="error-message" *ngIf="validations_form.get('password').hasError(validation.type) && (validations_form.get('password').dirty || validations_form.get('password').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <ion-item>
+          <ion-label  position="floating" color="secondary">Conferma Password</ion-label>
+          <ion-input [(ngModel)]="password1" type="password" formControlName="password2" class="form-controll" required></ion-input>
+        </ion-item>
+        <div class="validation-errors">
+          <ng-container *ngFor="let validation of validation_messages.password">
+            <div class="error-message" *ngIf="validations_form.get('password2').hasError(validation.type) && (validations_form.get('password2').dirty || validations_form.get('password').touched)">
+              {{ validation.message }}
+            </div>
+          </ng-container>
+        </div>
+        <ion-button color = "tertiary" expand = "full" class="submit-btn" type="submit" [disabled]="!validations_form.valid">Register</ion-button>
+        <label class="error-message">{{errorMessage}}</label>
+        <label class="success-message">{{successMessage}}</label>
+      </form>
+    </ion-col>
+    <ion-col size-md="2"></ion-col>
+  </ion-row>
+</ion-content>
+
+<!--
 <ion-content>
   <ion-row>
     <ion-col col-md-6></ion-col>
@@ -150,3 +280,4 @@
   </ion-row>
   <ion-button (click)="getCitta()"></ion-button>
 </ion-content>
+-->

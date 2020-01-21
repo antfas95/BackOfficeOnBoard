@@ -137,5 +137,6 @@ export class AnnuncioPage implements OnInit {
 
   logout() {
     this.authService.logoutUser();
+    this.router.navigate(['home']);
   }
 }

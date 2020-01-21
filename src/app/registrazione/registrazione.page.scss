@@ -22,6 +22,10 @@
     color: white;
 }
 
+.colore {
+    background-color: red($color: #000000);
+}
+
 .marginemod {
     margin-bottom: 1ch;
     margin-top: 1ch;
@@ -39,3 +43,11 @@
 .link {
     color: orangered;
 }
+
+p{
+    font-size: 5vh;
+}
+
+.go-to-login {
+    font-size: 3vh;
+} 

@@ -1,28 +1,30 @@
 <ion-header>
-  <ion-toolbar color = "primary">
+  <ion-toolbar color = "secondary">
     <ion-buttons>
       <ion-button (click)= "goBack()">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="secondary">
-      <ion-button (click) = "otherFunction()">
-        <ion-icon slot="icon-only" name="cog"></ion-icon>
-      </ion-button>
-    </ion-buttons>
 
     <ion-title text-center>Inserisci incontro</ion-title>
-
-    <ion-buttons slot="primary">
-      <ion-button (click) = "logout()">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <ion-card class = "cardcompleta" color = "primary">
+  <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
+    <ion-fab-button color= "tertiary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list>
+      <ion-fab-button color="light" (click)="otherFunction()">
+        <ion-icon name="cog"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+  <ion-card class = "cardcompleta" color = "secondary">
     <ion-grid>
       <ion-row>
         <ion-col col-md-6></ion-col>
@@ -58,7 +60,7 @@
         <ion-col col-md-6 class = "colonna1">
           <h1>Dettagli incontro</h1>
             <ion-item class= "marginemod">
-                <ion-label>Referente</ion-label>
+                <ion-label color="secondary">Referente</ion-label>
                 <ion-select ok-text="Seleziona" cancel-text="Annulla" [(ngModel)]="incontro.emailReferente">
                   <div *ngFor = "let ref of referenti | async">
                   <ion-select-option value = {{ref.email}}>{{ref.email}}</ion-select-option>
@@ -66,16 +68,16 @@
                 </ion-select>
             </ion-item>
             <ion-item class = "marginemod">
-                <ion-label>Data</ion-label>
+                <ion-label color="secondary">Data</ion-label>
                 <ion-datetime [(ngModel)]="incontro.data" value="02-11-2019" placeholder="Select Date"></ion-datetime>
             </ion-item>
             <ion-item>
-                <ion-label>Orario</ion-label>
+                <ion-label color="secondary">Orario</ion-label>
                 <ion-datetime [(ngModel)]="incontro.data" display-format="h:mm A" picker-format="h:mm A" value="1990-02-19T07:43Z"></ion-datetime>
             </ion-item>
             <ion-searchbar (click)="ricercaIndirizzi()" [(ngModel)] = "cityMeeting" placeholder = "Città dell'incontro"></ion-searchbar>
             <ion-item class= "marginemod" *ngIf="ricercaSede">
-              <ion-label>Scegli indirizzi associati alla provincia selezionata</ion-label>
+              <ion-label color="secondary">Scegli indirizzi associati alla provincia selezionata</ion-label>
               <ion-select ok-text="Seleziona" cancel-text="Annulla" [(ngModel)]="incontro.indirizzo">
                 <div *ngFor = "let sedi of sedi | async">
                 <ion-select-option value = {{sedi.Indirizzo}}>{{sedi.Indirizzo}}</ion-select-option>
@@ -87,7 +89,7 @@
       <ion-row>
         <ion-col col-md-5></ion-col>
         <ion-col col-md-2>
-          <ion-button (click)= "aggiungiIncontro()" expand = "full" color = "tertiary" fill = "solid" shape = "round" size = "large">Conferma Incontro</ion-button>
+          <ion-button (click)= "aggiungiIncontro()" expand = "full" color = "secondary" fill = "solid" shape = "round" size = "large">Conferma Incontro</ion-button>
         </ion-col>
         <ion-col col-md-5></ion-col>
       </ion-row>
@@ -97,5 +99,4 @@
       <p>Referente: {{inc.emailReferente}}</p>
       <p>Utente: {{inc.emailUtente}}</p>
     </div>
-    <ion-button (click) = "effettuaProve()">Prova</ion-button>
 </ion-content>

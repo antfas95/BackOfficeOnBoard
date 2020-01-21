@@ -212,5 +212,6 @@ async doConfirmDocument(event: FileList) {
 
   logout() {
     this.authService.logoutUser();
+    this.router.navigate(['home']);
   }
 }

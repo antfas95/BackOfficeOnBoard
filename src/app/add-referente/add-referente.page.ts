@@ -35,6 +35,7 @@ export class AddReferentePage implements OnInit {
   cittanascita: string;
   username: string;
   password: string;
+  password1: string;
   confirmpassword: string;
   giorno: number;
 
@@ -158,11 +159,9 @@ export class AddReferentePage implements OnInit {
         Validators.required,
       ])),
     });
-    
     this.itemService.getReferenti().subscribe(items => {
       console.log (items);
     });
-    
   }
 
   goBack() {
@@ -187,7 +186,8 @@ export class AddReferentePage implements OnInit {
   }
 
   tryRegister(value) {
-    this.authService.registerUser(value)
+    if (this.password === this.password1) {
+      this.authService.registerUser(value)
      .then(res => {
        console.log(res);
        this.errorMessage = '';
@@ -209,6 +209,9 @@ export class AddReferentePage implements OnInit {
        this.errorMessage = err.message;
        this.successMessage = '';
      });
+    } else {
+      this.passwordNonCombaciano('passward e conferma passward non combaciano');
+    }
   }
 
   registrati() {
@@ -222,6 +225,7 @@ export class AddReferentePage implements OnInit {
 
   logout() {
     this.authService.logoutUser();
+    this.router.navigate(['home']);
   }
 
   otherFunction() {
@@ -231,6 +235,15 @@ export class AddReferentePage implements OnInit {
   async presentAlert(message: string) {
     const alert = await this.alertCtrl.create({
       header: 'Funzionalità mancante',
+      message: '' + message,
+      buttons: ['Conferma']
+    });
+    alert.present();
+  }
+
+  async passwordNonCombaciano(message: string) {
+    const alert = await this.alertCtrl.create({
+      header: 'Compila il form correttamente',
       message: '' + message,
       buttons: ['Conferma']
     });

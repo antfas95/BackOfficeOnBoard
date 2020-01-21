@@ -1,34 +1,36 @@
 <ion-header>
-  <ion-toolbar color = "primary">
+  <ion-toolbar color = "secondary">
     <ion-buttons>
       <ion-button (click)= "goBack()">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="secondary">
-      <ion-button (click) = "otherFunction()">
-        <ion-icon slot="icon-only" name="cog"></ion-icon>
-      </ion-button>
-    </ion-buttons>
 
-    <ion-title text-center>Inserisci documento</ion-title>
-
-    <ion-buttons slot="primary">
-      <ion-button (click) = "logout()">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+    <ion-title text-center>Inserisci nuovo documento</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
+    <ion-fab-button color= "tertiary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list>
+      <ion-fab-button color="light" (click)="otherFunction()">
+        <ion-icon name="cog"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
   <ion-list>
   <ion-item text-center *ngFor="let item of images | async" [href]="item.filepath" target="_blank" rel="noopener">
       <ion-thumbnail slot="start" *ngIf="item.type=='image'">  <img [src]="item.filepath" /> </ion-thumbnail>
       <ion-thumbnail slot="start" *ngIf="item.type=='application'"> <img src="assets/img/pdf.png" /> </ion-thumbnail>
       <ion-item-sliding>
         <ion-label>
-        <h2>{{ item.name }}</h2>
+        <h2 color="secondary">{{ item.name }}</h2>
         <p slot="start">{{item.description}}</p>
         <p>Caricato da {{item.user}} il {{item.date}}</p>
         <ion-badge *ngIf="item.approval==0"><ion-icon name="cloud-circle" color="primary"></ion-icon>Da backoffice</ion-badge>
@@ -42,7 +44,7 @@
 
     <ion-card text-center *ngIf="!isUploading && !isUploaded">
       <ion-card-header>
-        <ion-card-title>Carica un File...</ion-card-title>
+        <ion-card-title color="secondary">Carica un File...</ion-card-title>
       </ion-card-header>
           <ion-input
             id="uploadBtn"

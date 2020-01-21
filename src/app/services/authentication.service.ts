@@ -17,10 +17,10 @@ export class AuthenticationService {
     })
    }
 
-   loginUser(value) {
-     console.log("Richiesta di login: " + value.email);
+   loginUser(email: string, password: string) {
+     console.log("Richiesta di login: " + email);
     return new Promise<any>((resolve, reject) => {
-      firebase.auth().signInWithEmailAndPassword(value.email, value.password)
+      firebase.auth().signInWithEmailAndPassword(email, password)
       .then(
         res => resolve(res),
         err => reject(err))

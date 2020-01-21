@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthenticationService } from '../services/authentication.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { ReferenteService } from '../services/referente.service';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,7 @@ export class HomePage {
   errorMessage: string = '';
 
   // tslint:disable-next-line: max-line-length
-  constructor(public alertCtrl: AlertController, private router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder) {
+  constructor(public alertCtrl: AlertController, private router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder, private refser: ReferenteService) {
   }
 
   ngOnInit() {
@@ -48,18 +49,7 @@ export class HomePage {
   };
 
   loginUser(value) {
-    console.log("HOME RICEVE: " + value.email);
-    console.log("stauts: "+ this.authService.isLogged);
-    this.authService.loginUser(value)
-    .then(res => {
-      console.log(res);
-      this.errorMessage = '';
-      console.log('login success: ' + value.email);
-      this.router.navigate(['dashboard-def']);
-    }, err => {
-      this.presentAlert ('Log in non avvenuta con successo, inserisci le giuste credenziali');
-      this.errorMessage = err.message;
-    })
+    this.refser.verificaCorrettezzaLogin(value.email, value.password);
   }
 
   goToRegisterPage() {

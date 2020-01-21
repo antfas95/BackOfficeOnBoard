@@ -120,5 +120,6 @@ export class ApprovazionePage implements OnInit {
 
   logout() {
     this.authService.logoutUser();
+    this.router.navigate(['home']);
   }
 }

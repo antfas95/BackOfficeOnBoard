@@ -1,31 +1,32 @@
 <ion-header>
-  <ion-toolbar color = "primary">
+  <ion-toolbar color = "secondary">
     <ion-buttons>
       <ion-button (click)= "goBack()">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-buttons slot="secondary">
-      <ion-button (click) = "otherFunction()">
-        <ion-icon slot="icon-only" name="cog"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-
     <ion-title text-center>Dashboard</ion-title>
-
-    <ion-buttons slot="primary">
-      <ion-button (click) = "logout()">
-        <ion-icon slot="icon-only" name="log-out"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <ion-fab horizontal="end" vertical="top" slot="fixed" edge>
+    <ion-fab-button color= "tertiary">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list>
+      <ion-fab-button color="light" (click)="otherFunction()">
+        <ion-icon name="cog"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="logout()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
   <ion-grid>
     <ion-row>
       <ion-col col-md-6></ion-col>
-      <ion-img class = "immagine" src="..\assets\img\insella.png"></ion-img>
+      <ion-img class = "immagine" src="..\assets\img\OnBoardingLogo.png"></ion-img>
       <ion-col col-md-6></ion-col>
     </ion-row>
   </ion-grid>
@@ -35,7 +36,7 @@
     <ion-col col-md-4></ion-col>
     <ion-col col-md-4>
     <ion-list>
-      <ion-list-header class = "headerLista" color = "tertiary">
+      <ion-list-header class = "headerLista" color = "secondary">
         Lista dei tuoi incontri giornalieri
       </ion-list-header>
       <ion-item text-center *ngFor="let item of incontri | async">
