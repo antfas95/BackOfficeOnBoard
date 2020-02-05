@@ -15,6 +15,7 @@ export interface MyData {
   date: string;
   approval: number;
   description: string;
+  motivation?: string;
 }
 
 @Component({
@@ -27,14 +28,18 @@ export class ApprovazionePage implements OnInit {
   // Uploaded Image List
   images: Observable<MyData[]>;
   valorericerca: string;
+  ricercafatta: boolean;
 
   private imageCollection: AngularFirestoreCollection<MyData>;
 
   emailAuth: string;
   user: any;
+  motivazione: string;
 
   constructor(public alertCtrl: AlertController, public router: Router, private storage: AngularFireStorage, private authService: AuthenticationService , private database: AngularFirestore) {
     this.user = this.authService.userDetails();
+    this.valorericerca = '';
+    this.ricercafatta = false;
 
     if (this.user) {
         // User is signed in.
@@ -68,6 +73,7 @@ export class ApprovazionePage implements OnInit {
     if (this.valorericerca === '') {
       console.log ('Inserisci prima il filtro della ricerca e poi efferrua la query');
     } else {
+      this.ricercafatta = true;
       this.imageCollection = this.database.collection<MyData>(this.valorericerca, ref => ref.where('approval', '==', 1));
       this.images = this.imageCollection.valueChanges();
     }
@@ -86,14 +92,49 @@ export class ApprovazionePage implements OnInit {
     //this.imageCollection = this.database.collection<MyData>(this.valorericerca);
   }
 
-  rigettaDomanda(datoPassato: MyData) {
-    datoPassato.approval = 2;
-    this.imageCollection.doc(datoPassato.id).update(datoPassato).then(resp => {
-      console.log(resp);
-    }).catch(error => {
-      console.log('error ' + error);
+  async rigettaDomanda(datoPassato: MyData) {
+    const confirm = this.alertCtrl.create({
+      header: 'Rigetta domanda',
+      message: 'Inserisci una motivazione al rigetto della domanda selezionata',
+      inputs: [{
+        name: 'motivazione',
+        placeholder: 'Motivazione > 5 caratteri',
+        value: '',
+      },
+    ],
+      buttons: [
+        {
+          text: 'NO',
+          handler: () => {
+            console.log('Disagree clicked');
+            this.presentAlert('Domanda non rigettata');
+            return;
+          }
+        },
+        {
+          text: 'SI',
+          handler: data => {
+            // Check description
+            this.motivazione = data.motivazione;
+            console.log ('Ecco la motivazione inserita: ' + this.motivazione);
+            if (this.motivazione.length <= 5) {
+              this.presentAlert('La lunghezza della descrizione non rispetta il formato');
+              return;
+            } else {
+              datoPassato.approval = 2;
+              datoPassato.motivation = this.motivazione;
+              this.imageCollection.doc(datoPassato.id).update(datoPassato).then(resp => {
+              console.log(resp);
+              }).catch(error => {
+              console.log('error ' + error);
+              });
+              this.presentRisposta ('Hai rigettato il documento di: ' + datoPassato.user);
+            }
+          }
+        }
+      ]
     });
-    this.presentRisposta ('Hai rigettato il documento di: ' + datoPassato.user);
+    (await confirm).present();
   }
 
   async presentAlert(message: string) {
@@ -121,5 +162,9 @@ export class ApprovazionePage implements OnInit {
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['home']);
+  }
+
+  modificaStato() {
+    
   }
 }

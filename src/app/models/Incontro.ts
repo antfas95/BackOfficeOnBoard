@@ -5,4 +5,5 @@ export interface Incontro {
     data: string;
     ora: string;
     indirizzo: string;
+    optional: string;
 }

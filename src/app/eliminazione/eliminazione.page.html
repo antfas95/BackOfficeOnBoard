@@ -50,7 +50,9 @@
             <p>Cognome:</p> {{item.cognome}}
             <p>Codice fiscale:</p> {{item.codice_fiscale}}
             <p>Indirizzo:</p> {{item.indirizzo}}
-            <ion-button (click)= "eliminaUtente(item)" expand = "full" color = "secondary" fill = "solid" shape = "round" size = "large">Conferma eliminazione</ion-button>
+            <p>Stato:</p> {{item.stato}}
+            <ion-button (click)= "eliminaUtente(item)" expand = "full" color = "secondary" fill = "solid" shape = "round" size = "large">Elimina Utente</ion-button>
+            <ion-button (click)= "modificaUtente(item)" expand = "full" color = "secondary" fill = "solid" shape = "round" size = "large">Assumi utente</ion-button>
             <a class = "link" (click)="goBack()">Clicca qui per annullare l'operazione</a>
           </ion-col>
     <ion-col col-md-6></ion-col>

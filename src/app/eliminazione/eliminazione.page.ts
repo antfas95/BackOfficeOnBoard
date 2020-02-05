@@ -106,4 +106,28 @@ export class EliminazionePage implements OnInit {
     this.authService.logoutUser();
     this.router.navigate(['home']);
   }
+
+  async modificaUtente(utente: Utente) {
+    const confirm = this.alertCtrl.create({
+      header: 'Assunzione utente',
+      message: 'Sei sicuro di voler assumere: ' + utente.email,
+      buttons: [
+        {
+          text: 'NO',
+          handler: () => {
+            console.log('Disagree clicked');
+            this.presentAlert('Domanda non rigettata');
+            return;
+          }
+        },
+        {
+          text: 'SI',
+          handler: data => {
+            this.uS.modificaUtente(utente);
+          }
+        }
+      ]
+    });
+    (await confirm).present();
+  }
 }

@@ -26,6 +26,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 
+import { SMS } from '@ionic-native/sms/ngx';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
+
 firebase.initializeApp(environment.firebase);
 
 @NgModule({
@@ -41,6 +44,8 @@ firebase.initializeApp(environment.firebase);
     UtenteService,
     ReferenteService,
     IncontroService,
+    SMS,
+    EmailComposer,
     IndirizziService,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

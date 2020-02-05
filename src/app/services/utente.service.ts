@@ -97,4 +97,10 @@ export class UtenteService {
       });
     return this.presenza;
    }
+
+   modificaUtente(utente: Utente) {
+     console.log('Mi trovo nel metodo aggiornamento: ' + utente.stato);
+     utente.stato = true;
+     this.itemsCollections.doc(utente.email).update(utente);
+   }
 }

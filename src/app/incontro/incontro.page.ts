@@ -38,6 +38,7 @@ export class IncontroPage implements OnInit {
     data: '',
     ora: '',
     indirizzo: '',
+    optional: '',
   };
 
   user: any;
@@ -122,6 +123,7 @@ export class IncontroPage implements OnInit {
       this.incontro.ora = this.incontro.data.toString().substring(11, 16);
       this.incontro.data = this.incontro.data.toString().substring(0, 10);
       console.log('Ora Incontro: ' + this.incontro.ora);
+      this.incontro.indirizzo = this.incontro.indirizzo + ', ' + this.cityMeeting;
       const ritorno = this.iS.addIncontro(this.incontro, this.emailAuth);
       console.log ('Ecco il ritorno: ' + ritorno);
       this.presentAlertSuccess ('Incontro inserito in maniera corretta');

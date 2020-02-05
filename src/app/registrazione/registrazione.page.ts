@@ -6,6 +6,8 @@ import { NavController } from '@ionic/angular';
 import { UtenteService } from '../services/utente.service';
 import { Utente } from '../models/Utente';
 import { AlertController } from '@ionic/angular';
+import { SMS } from '@ionic-native/sms/ngx';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 @Component({
   selector: 'app-registrazione',
@@ -86,7 +88,7 @@ export class RegistrazionePage implements OnInit {
   password1: string;
 
   // tslint:disable-next-line: max-line-length
-  constructor(public alertCtrl: AlertController, public router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder, public itemService: UtenteService) {
+  constructor(private emailComposer: EmailComposer, private sms: SMS, public alertCtrl: AlertController, public router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder, public itemService: UtenteService) {
     this.user = this.authService.userDetails();
 
     
@@ -176,10 +178,24 @@ export class RegistrazionePage implements OnInit {
   tryRegister(value) {
     this.errorMessage = '';
     this.successMessage = 'Il tuo account è stato correttamente creato prova a loggarti';
-    this.utente.datanascita = this.datanascita.toString().substring(0, 10);
+    //this.utente.datanascita = this.datanascita.toString().substring(0, 10);
     this.utente.cittàNascita = this.cittanascita;
     if (this.password === this.password1) {
       this.itemService.addCliente(this.utente);
+      // Send a text message using default options
+      console.log ('Invio il messaggio');
+      this.sms.send('+393383177453', 'Hello world!');
+
+       let email = {
+        to: 'max@mustermann.de',
+        cc: 'erika@mustermann.de',
+        bcc: ['john@doe.com', 'jane@doe.com'],
+        subject: 'Cordova Icons',
+        body: 'How are you? Nice greetings from Leipzig',
+        isHtml: true
+      }
+      // Send a text message using default options
+      this.emailComposer.open(email);
       this.utente.nome = '';
       this.utente.cognome = '';
       this.utente.indirizzo = '';
