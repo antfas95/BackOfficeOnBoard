@@ -7,6 +7,8 @@ import { Observable } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
 import * as firebase from 'firebase/app';
 import { AlertController } from '@ionic/angular';
+import { Utente } from '../models/Utente';
+import { UtenteService } from '../services/utente.service';
 
 
 @Component({
@@ -22,12 +24,17 @@ export class DashboardDefPage implements OnInit {
 
   idPassato: string;
   incontri: Observable<Incontro[]>;
+  utenti: Observable<Utente[]>;
+
 
   user: any;
   // tslint:disable-next-line: max-line-length
-  constructor(public alertCtrl: AlertController, public router: Router, private navCTRL: NavController, private activated: ActivatedRoute, private iS: IncontroService, private authService: AuthenticationService) {
+  constructor(public alertCtrl: AlertController, public router: Router, private navCTRL: NavController, private activated: ActivatedRoute,
+     private iS: IncontroService, private authService: AuthenticationService, public userService: UtenteService) {
+   
     this.user = this.authService.userDetails();
     this.count = false;
+    this.utenti = userService.getUsers();
 
     if (this.user) {
         // User is signed in.
@@ -76,7 +83,6 @@ export class DashboardDefPage implements OnInit {
   }
 
   ngOnDestroy(){
-
   }
 
   goBack() {
