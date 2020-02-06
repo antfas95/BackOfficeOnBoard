@@ -33,56 +33,46 @@
 
   <ion-grid>
     <ion-row>
-      <ion-col col-md-5></ion-col>
-      <ion-col col-md-5>
-      <ion-list>
-        <ion-list-header class = "headerLista" color = "secondary">
-          Lista degli Utenti
-        </ion-list-header>
-        <p *ngFor="let item of utenti | async">
-        <ion-item text-center *ngIf="item.stato===false">
-          <ion-thumbnail slot="start"> <ion-icon class = "icona" name="contacts"></ion-icon> </ion-thumbnail>
-          <ion-item-sliding>
+      <ion-col col-md-6>
+        <ion-list>
+          <ion-list-header class = "headerLista" color = "secondary">
+            Lista degli Utenti
+          </ion-list-header>
+          <p *ngFor="let item of utenti | async">
+          <ion-item text-center *ngIf="item.stato===false" (click) = "secgliOption(item)">
+            <ion-thumbnail slot="start"> <ion-icon class = "icona" name="contacts"></ion-icon> </ion-thumbnail>
+            <ion-item-sliding>
             <ion-label>
-            <h2>Orario incontro: {{ item.nome }}</h2>
-            <p class = "paragrafo">Email della persona che incontrerai all'incontro: {{item.email}}</p>
-            <p class = "paragrafo">Luogo dell'incontro: {{ item.cognome }}</p>
-            <ion-badge text-center *ngIf="item.stato===false"><ion-icon name="radio-button-on" color="success"></ion-icon>Non Assunto</ion-badge>
-            <ion-badge text-center *ngIf="item.stato===false"><ion-icon name="radio-button-on" color="primary"></ion-icon>Nuovi Documenti?</ion-badge>  
-            <ion-badge text-center *ngIf="item.stato===true"><ion-icon name="radio-button-on" color="danger"></ion-icon>Old</ion-badge>            
-          </ion-label>
-            </ion-item-sliding>
-        </ion-item>
-        </p>
-      </ion-list>
-    </ion-col>
-      <ion-col col-md-5></ion-col>
+              <h2>Nome utente: {{ item.nome }} {{ item.cognome }}</h2>
+              <p class = "paragrafo">Email della persona che incontrerai all'incontro: {{ item.email }}</p>
+              <ion-badge class="margine" text-center *ngIf="item.stato===false"><ion-icon name="radio-button-on" color="success"></ion-icon>Non Assunto</ion-badge>
+              <ion-badge text-center *ngIf="item.caricamenti===false"><ion-icon name="radio-button-on" color="danger"></ion-icon>Documenti Non Caricati</ion-badge>  
+              <ion-badge text-center *ngIf="item.caricamenti===true"><ion-icon name="radio-button-on" color="tertiary"></ion-icon>Documenti caricati</ion-badge>            
+              </ion-label>
+              </ion-item-sliding>
+          </ion-item>
+          </p>
+        </ion-list>
+      </ion-col>
+      <ion-col col-md-6>
+        <ion-list>
+          <ion-list-header class = "headerLista" color = "secondary">
+            Lista dei tuoi incontri giornalieri
+          </ion-list-header>
+          <ion-item text-center *ngFor="let item of incontri | async">
+            <ion-thumbnail slot="start"> <ion-icon class = "icona" name="contacts"></ion-icon> </ion-thumbnail>
+            <ion-item-sliding>
+              <ion-label>
+              <h2>Orario incontro: {{ item.ora }}</h2>
+              <p class = "paragrafo">Email della persona che incontrerai all'incontro: {{item.emailUtente}}</p>
+              <p class = "paragrafo">Luogo dell'incontro: {{ item.indirizzo }}</p>
+              </ion-label>
+              </ion-item-sliding>
+          </ion-item>
+        </ion-list>
+      </ion-col>
     </ion-row>
   </ion-grid>
-
-  <ion-grid>
-  <ion-row>
-    <ion-col col-md-5></ion-col>
-    <ion-col col-md-5>
-    <ion-list>
-      <ion-list-header class = "headerLista" color = "secondary">
-        Lista dei tuoi incontri giornalieri
-      </ion-list-header>
-      <ion-item text-center *ngFor="let item of incontri | async">
-        <ion-thumbnail slot="start"> <ion-icon class = "icona" name="contacts"></ion-icon> </ion-thumbnail>
-        <ion-item-sliding>
-          <ion-label>
-          <h2>Orario incontro: {{ item.ora }}</h2>
-          <p class = "paragrafo">Email della persona che incontrerai all'incontro: {{item.emailUtente}}</p>
-          <p class = "paragrafo">Luogo dell'incontro: {{ item.indirizzo }}</p>
-          </ion-label>
-          </ion-item-sliding>
-      </ion-item>
-    </ion-list>
-  </ion-col>
-    <ion-col col-md-5></ion-col>
-  </ion-row>
-</ion-grid>
 
   <ion-grid class = "griglia">
     <h1>Da quest'area potrai avere accesso a tutte le nostre funzionalità</h1>

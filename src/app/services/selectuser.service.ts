@@ -5,5 +5,18 @@ import { Injectable } from '@angular/core';
 })
 export class SelectuserService {
 
-  constructor() { }
+  // tslint:disable-next-line: variable-name
+  public utente_selezionato: string;
+
+  constructor() {
+    this.utente_selezionato = '';
+  }
+
+  getUtente() {
+    return this.utente_selezionato;
+  }
+
+  setUtente(emailUtente: string) {
+    this.utente_selezionato = emailUtente;
+  }
 }

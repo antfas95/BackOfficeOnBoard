@@ -10,4 +10,5 @@ export interface Utente {
     residenza?: string;
     indirizzo?: string;
     stato?: boolean;
+    caricamenti?: boolean;
 }

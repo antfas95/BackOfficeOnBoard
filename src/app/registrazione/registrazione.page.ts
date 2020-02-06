@@ -31,6 +31,7 @@ export class RegistrazionePage implements OnInit {
     residenza: '',
     indirizzo: '',
     stato: false,
+    caricamenti: false,
   };
 
   // Variabili utili per l'autentcicazione

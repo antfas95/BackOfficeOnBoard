@@ -5,6 +5,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AlertController } from '@ionic/angular';
+import { SelectuserService } from '../services/selectuser.service';
 
 export interface MyData {
   id: string;
@@ -35,11 +36,13 @@ export class ApprovazionePage implements OnInit {
   emailAuth: string;
   user: any;
   motivazione: string;
+  utentePassato: string;
 
-  constructor(public alertCtrl: AlertController, public router: Router, private storage: AngularFireStorage, private authService: AuthenticationService , private database: AngularFirestore) {
+  constructor(public selezionato: SelectuserService, public alertCtrl: AlertController, public router: Router, private storage: AngularFireStorage, private authService: AuthenticationService , private database: AngularFirestore) {
     this.user = this.authService.userDetails();
     this.valorericerca = '';
     this.ricercafatta = false;
+    this.utentePassato = this.selezionato.getUtente();
 
     if (this.user) {
         // User is signed in.
@@ -53,6 +56,10 @@ export class ApprovazionePage implements OnInit {
         // No user is signed in.
       }
     //this.reload();
+    if (this.utentePassato !== '') {
+      this.valorericerca = this.utentePassato;
+      this.effettuaRicerca();
+    }
   }
 
   reload() {

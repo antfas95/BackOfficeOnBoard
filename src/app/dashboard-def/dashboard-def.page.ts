@@ -9,6 +9,7 @@ import * as firebase from 'firebase/app';
 import { AlertController } from '@ionic/angular';
 import { Utente } from '../models/Utente';
 import { UtenteService } from '../services/utente.service';
+import { SelectuserService } from '../services/selectuser.service';
 
 
 @Component({
@@ -29,9 +30,8 @@ export class DashboardDefPage implements OnInit {
 
   user: any;
   // tslint:disable-next-line: max-line-length
-  constructor(public alertCtrl: AlertController, public router: Router, private navCTRL: NavController, private activated: ActivatedRoute,
-     private iS: IncontroService, private authService: AuthenticationService, public userService: UtenteService) {
-   
+  constructor(public selezionato: SelectuserService, public alertCtrl: AlertController, public router: Router, private navCTRL: NavController, private activated: ActivatedRoute,
+  private iS: IncontroService, private authService: AuthenticationService, public userService: UtenteService) {
     this.user = this.authService.userDetails();
     this.count = false;
     this.utenti = userService.getUsers();
@@ -83,6 +83,53 @@ export class DashboardDefPage implements OnInit {
   }
 
   ngOnDestroy(){
+  }
+
+  async secgliOption(utente: Utente) {
+    this.selezionato.setUtente(utente.email);
+    console.log ('valore utente: ' + this.selezionato.getUtente());
+    const confirm = this.alertCtrl.create({
+      header: 'Scegli cosa vuoi fare per il cliente selezionato',
+      buttons: [
+        {
+          text: 'Approvazione documenti',
+          handler: () => {
+            this.router.navigate(['approvazione']);
+            return;
+          }
+        },
+        {
+          text: 'Elimina/Approva Utente',
+          handler: data => {
+            this.router.navigate(['eliminazione']);
+            return;
+            // Check description
+            //this.motivazione = data.motivazione;
+            //console.log ('Ecco la motivazione inserita: ' + this.motivazione);
+          }
+        },
+        {
+          text: 'Inserisci incontro',
+          handler: data => {
+            this.router.navigate(['incontro']);
+            return;
+            // Check description
+            //this.motivazione = data.motivazione;
+            //console.log ('Ecco la motivazione inserita: ' + this.motivazione);
+          }
+        },
+        {
+          text: 'Annulla',
+          handler: data => {
+            return;
+            // Check description
+            //this.motivazione = data.motivazione;
+            //console.log ('Ecco la motivazione inserita: ' + this.motivazione);
+          }
+        },
+      ]
+    });
+    (await confirm).present();
   }
 
   goBack() {
