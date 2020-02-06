@@ -1,5 +1,7 @@
 {
   "name": "InSellaProject",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
