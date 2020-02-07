@@ -30,15 +30,16 @@ export class ApprovazionePage implements OnInit {
   images: Observable<MyData[]>;
   valorericerca: string;
   ricercafatta: boolean;
+  utentePassato: string;
 
   private imageCollection: AngularFirestoreCollection<MyData>;
 
   emailAuth: string;
   user: any;
   motivazione: string;
-  utentePassato: string;
 
-  constructor(public selezionato: SelectuserService, public alertCtrl: AlertController, public router: Router, private storage: AngularFireStorage, private authService: AuthenticationService , private database: AngularFirestore) {
+  // tslint:disable-next-line: max-line-length
+  constructor(public alertCtrl: AlertController, public router: Router, private storage: AngularFireStorage, private authService: AuthenticationService , private database: AngularFirestore, public selezionato: SelectuserService) {
     this.user = this.authService.userDetails();
     this.valorericerca = '';
     this.ricercafatta = false;
@@ -59,6 +60,7 @@ export class ApprovazionePage implements OnInit {
     if (this.utentePassato !== '') {
       this.valorericerca = this.utentePassato;
       this.effettuaRicerca();
+      console.log ('Elemento passato: ' + this.valorericerca);
     }
   }
 
@@ -73,6 +75,7 @@ export class ApprovazionePage implements OnInit {
 
   goBack() {
     this.router.navigate(['dashboard-def']);
+    this.selezionato.setUtente('');
   }
 
   effettuaRicerca() {
@@ -169,6 +172,18 @@ export class ApprovazionePage implements OnInit {
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['home']);
+  }
+
+  paginaRegistrazione() {
+    this.router.navigate(['registrazione']);
+  }
+
+  paginaIncontri() {
+    this.router.navigate(['incontro']);
+  }
+
+  caricaDocumenti() {
+    this.router.navigate(['carica-documenti']);
   }
 
   modificaStato() {

@@ -16,8 +16,17 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list>
-      <ion-fab-button color="light" (click)="otherFunction()">
-        <ion-icon name="cog"></ion-icon>
+      <ion-fab-button color="light" (click)="paginaRegistrazione()">
+        <ion-icon name="person-add"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="paginaIncontri()">
+        <ion-icon name="clock"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="approvaDomanda()">
+        <ion-icon name="filing"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="caricaDocumenti()">
+        <ion-icon name="archive"></ion-icon>
       </ion-fab-button>
       <ion-fab-button color="light" (click)="logout()">
         <ion-icon name="log-out"></ion-icon>
@@ -35,7 +44,7 @@
       <ion-col col-md-4></ion-col>
       <ion-col col-md-4>
         <ion-row>
-          <ion-searchbar (click)="effettuaRicerca()" [(ngModel)] = "valorericerca" placeholder = "ricerca utente"></ion-searchbar>
+          <ion-searchbar (click)="effettuaRicerca()" [(ngModel)] = "valorericerca" value = {{utentePassato}}></ion-searchbar>
         </ion-row>
       </ion-col>
       <ion-col col-md-4></ion-col>

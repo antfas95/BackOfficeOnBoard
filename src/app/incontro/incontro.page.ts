@@ -11,6 +11,8 @@ import { IndirizziService } from '../services/indirizzi.service';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
 import { AlertController } from '@ionic/angular';
+import { SelectuserService } from '../services/selectuser.service';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 @Component({
   selector: 'app-incontro',
@@ -30,6 +32,8 @@ export class IncontroPage implements OnInit {
   utenti: Observable<Utente[]>;
   incontri: Observable<Incontro[]>;
 
+  utentePassato: string;
+
   cityMeeting: string;
 
   incontro: Incontro = {
@@ -43,13 +47,13 @@ export class IncontroPage implements OnInit {
 
   user: any;
   // tslint:disable-next-line: max-line-length
-  constructor(public alertCtrl: AlertController, public router: Router, public uS: UtenteService, public iS: IncontroService, public rS: ReferenteService, public indirizzoService: IndirizziService, private authService: AuthenticationService) {
+  constructor(private emailComposer: EmailComposer, public alertCtrl: AlertController, public router: Router, public uS: UtenteService, public iS: IncontroService, public rS: ReferenteService, public indirizzoService: IndirizziService, private authService: AuthenticationService, public selezionato: SelectuserService) {
     this.valorericerca = '';
     this.cityMeeting = '';
     this.ricercaSede = false;
     this.ricercaFatta = false;
     this.user = this.authService.userDetails();
-
+    this.utentePassato = this.selezionato.getUtente();
     if (this.user) {
         // User is signed in.
         console.log ('Utente loggato');
@@ -62,6 +66,8 @@ export class IncontroPage implements OnInit {
         // No user is signed in.
       }
     //this.reload();
+    console.log ('Carico gli incontri per: ' + this.selezionato.getReferenteLoggato());
+    this.incontri = this.iS.getIncontriXData(this.selezionato.getReferenteLoggato());
   }
 
   reload() {
@@ -72,6 +78,12 @@ export class IncontroPage implements OnInit {
   ngOnInit() {
     // Funziona solo se effettuo la sessione
     // this.emailAuth = this.authService.userDetails().email;
+    this.utentePassato = this.selezionato.getUtente();
+    //this.iS.getIncontriByReferenti();
+    if (this.utentePassato !== '') {
+      this.valorericerca = this.utentePassato;
+      this.effettuaRicerca();
+    }
     console.log ('Valore dal servizio di autenticazione: ' + this.authService.userDetails().email);
     if (this.authService.userDetails().email !== null ) {
       //this.router.navigate(['home']);
@@ -95,6 +107,7 @@ export class IncontroPage implements OnInit {
 
   goBack() {
     this.router.navigate(['dashboard-def']);
+    this.selezionato.setUtente('');
   }
 
   inseriscIncontro() {
@@ -105,6 +118,7 @@ export class IncontroPage implements OnInit {
     if (this.valorericerca === '') {
       console.log ('Mi trovo nel metodo di controllo');
     } else {
+      console.log ('Effettuo la query di ricerca con: ' + this.valorericerca);
       this.incontro.emailUtente = this.valorericerca;
       this.ricercaFatta = true;
       this.items = this.uS.getUserEmail(this.valorericerca);
@@ -127,8 +141,24 @@ export class IncontroPage implements OnInit {
       const ritorno = this.iS.addIncontro(this.incontro, this.emailAuth);
       console.log ('Ecco il ritorno: ' + ritorno);
       this.presentAlertSuccess ('Incontro inserito in maniera corretta');
+      let email = {
+        to: this.incontro.emailUtente,
+        cc: this.incontro.emailReferente,
+        //bcc: ['john@doe.com', 'jane@doe.com'],
+        subject: 'Nuovo incontro',
+        body: "Il tuo incontro è previsto per il: " + this.incontro.data + " alle ore: " + this.incontro.ora +
+        "\nNon ti dimenticare di portare tutto il materiale necessario." +
+        '\nCordiali saluti,' +
+        '\nBanca Sella, gruppo Biella.',
+        isHtml: true
+      }
+      this.emailComposer.open(email);
     }
     // this.vistaAnnunciInseriti();
+  }
+
+  eliminaIncontro(incontro: Incontro) {
+    this.iS.eliminaIncontro(incontro, incontro.emailReferente, incontro.emailUtente);
   }
 
   ricercaIndirizzi() {
@@ -182,5 +212,21 @@ export class IncontroPage implements OnInit {
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['home']);
+  }
+
+  paginaRegistrazione() {
+    this.router.navigate(['registrazione']);
+  }
+
+  paginaIncontri() {
+    this.router.navigate(['incontro']);
+  }
+
+  approvaDomanda() {
+    this.router.navigate(['approvazione']);
+  }
+
+  caricaDocumenti() {
+    this.router.navigate(['carica-documenti']);
   }
 }

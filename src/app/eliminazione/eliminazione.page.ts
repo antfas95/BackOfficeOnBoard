@@ -5,6 +5,7 @@ import { Utente } from '../models/Utente';
 import { Observable } from 'rxjs';
 import { AlertController } from '@ionic/angular';
 import { AuthenticationService } from '../services/authentication.service';
+import { SelectuserService } from '../services/selectuser.service';
 
 @Component({
   selector: 'app-eliminazione',
@@ -19,16 +20,19 @@ export class EliminazionePage implements OnInit {
   valorericerca: string;
   items: Observable<Utente[]>;
   utente: Utente;
+  utentePassato: string;
 
   emailAuth: string;
   user: any;
 
-  constructor(public alertCtrl: AlertController, private authService: AuthenticationService, public router: Router, public uS: UtenteService) {
+  // tslint:disable-next-line: max-line-length
+  constructor(public alertCtrl: AlertController, private authService: AuthenticationService, public router: Router, public uS: UtenteService, public selezionato: SelectuserService) {
     this.valorericerca = '';
     this.ricercaFatta = false;
     this.presenza = false;
 
     this.user = this.authService.userDetails();
+    this.utentePassato = this.selezionato.getUtente();
 
     if (this.user) {
         // User is signed in.
@@ -41,6 +45,10 @@ export class EliminazionePage implements OnInit {
         //this.router.navigate(['home']);
         // No user is signed in.
     }
+    if (this.utentePassato !== '') {
+      this.valorericerca = this.utentePassato;
+      this.effettuaRicerca();
+    }
   }
 
   reload() {
@@ -52,6 +60,7 @@ export class EliminazionePage implements OnInit {
   }
 
   goBack() {
+    this.selezionato.setUtente('');
     this.router.navigate(['dashboard-def']);
     this.ricercaFatta = false;
   }
@@ -129,5 +138,21 @@ export class EliminazionePage implements OnInit {
       ]
     });
     (await confirm).present();
+  }
+
+  paginaRegistrazione() {
+    this.router.navigate(['registrazione']);
+  }
+
+  paginaIncontri() {
+    this.router.navigate(['incontro']);
+  }
+
+  approvaDomanda() {
+    this.router.navigate(['approvazione']);
+  }
+
+  caricaDocumenti() {
+    this.router.navigate(['carica-documenti']);
   }
 }

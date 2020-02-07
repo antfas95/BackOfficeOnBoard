@@ -3,12 +3,12 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NavController } from '@ionic/angular';
 import { IncontroService } from '../services/incontro.service';
 import { Incontro } from '../models/Incontro';
+import { Utente } from '../models/Utente';
+import { UtenteService } from '../services/utente.service';
 import { Observable } from 'rxjs';
 import { AuthenticationService } from '../services/authentication.service';
 import * as firebase from 'firebase/app';
 import { AlertController } from '@ionic/angular';
-import { Utente } from '../models/Utente';
-import { UtenteService } from '../services/utente.service';
 import { SelectuserService } from '../services/selectuser.service';
 
 
@@ -27,14 +27,11 @@ export class DashboardDefPage implements OnInit {
   incontri: Observable<Incontro[]>;
   utenti: Observable<Utente[]>;
 
-
   user: any;
   // tslint:disable-next-line: max-line-length
-  constructor(public selezionato: SelectuserService, public alertCtrl: AlertController, public router: Router, private navCTRL: NavController, private activated: ActivatedRoute,
-  private iS: IncontroService, private authService: AuthenticationService, public userService: UtenteService) {
+  constructor(public alertCtrl: AlertController, public router: Router, private navCTRL: NavController, private activated: ActivatedRoute, private iS: IncontroService, private authService: AuthenticationService, public userService: UtenteService, public selezionato: SelectuserService) {
     this.user = this.authService.userDetails();
     this.count = false;
-    this.utenti = userService.getUsers();
 
     if (this.user) {
         // User is signed in.
@@ -52,6 +49,7 @@ export class DashboardDefPage implements OnInit {
    reload() {
     console.log ('Mi trovo nel reload' + this.emailAuth);
     this.incontri = this.iS.getIncontriByReferenti(this.emailAuth);
+    this.utenti = this.userService.getUsers();
     // this.count = this.iS.getIncontriInfo(this.emailAuth);
     // console.log ('Ecco il ritorno di riferimento: ' + this.count);
    }
@@ -133,39 +131,47 @@ export class DashboardDefPage implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['home']);
+    this.logout();
   }
 
   paginaRegistrazione() {
     this.router.navigate(['registrazione']);
+    this.selezionato.setUtente('');
   }
 
   paginAnnunci() {
     this.router.navigate(['annuncio']);
+    this.selezionato.setUtente('');
   }
 
   paginaIncontri() {
     this.router.navigate(['incontro']);
+    this.selezionato.setUtente('');
   }
 
   approvaDomanda() {
     this.router.navigate(['approvazione']);
+    this.selezionato.setUtente('');
   }
 
   eliminaUtente() {
     this.router.navigate(['eliminazione']);
+    this.selezionato.setUtente('');
   }
 
   caricaDocumenti() {
     this.router.navigate(['carica-documenti']);
+    this.selezionato.setUtente('');
   }
 
   aggiungiReferente() {
     this.router.navigate(['add-referente']);
+    this.selezionato.setUtente('');
   }
 
   eliminaReferente() {
     this.router.navigate(['elimina-referente']);
+    this.selezionato.setUtente('');
   }
 
   altreFunzioni() {
@@ -183,10 +189,12 @@ export class DashboardDefPage implements OnInit {
 
   otherFunction() {
     this.presentAlert ('Funzione ancora non implementata');
+    this.selezionato.setUtente('');
   }
 
   logout() {
     this.authService.logoutUser();
+    this.selezionato.setUtente('');
     this.router.navigate(['home']);
   }
 }

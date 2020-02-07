@@ -6,6 +6,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
 import { ReferenteService } from '../services/referente.service';
+import { SelectuserService } from '../services/selectuser.service';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,7 @@ export class HomePage {
   errorMessage: string = '';
 
   // tslint:disable-next-line: max-line-length
-  constructor(public alertCtrl: AlertController, private router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder, private refser: ReferenteService) {
+  constructor(public alertCtrl: AlertController, private router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder, private refser: ReferenteService, public selezionato: SelectuserService) {
   }
 
   ngOnInit() {

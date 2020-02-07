@@ -6,6 +6,7 @@ import { AngularFireDatabase, AngularFireList } from '@angular/fire/database';
 import { Observable } from 'rxjs';
 import { AlertController } from '@ionic/angular';
 import { AuthenticationService } from '../services/authentication.service';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 @Component({
   selector: 'app-annuncio',
@@ -28,7 +29,8 @@ export class AnnuncioPage implements OnInit {
   emailAuth: string;
   user: any;
 
-  constructor(private authService: AuthenticationService, public alertCtrl: AlertController, public router: Router, public annunciService: AnnunciService) {
+  // tslint:disable-next-line: max-line-length
+  constructor(private emailComposer: EmailComposer, private authService: AuthenticationService, public alertCtrl: AlertController, public router: Router, public annunciService: AnnunciService) {
     this.user = this.authService.userDetails();
 
     if (this.user) {
@@ -138,5 +140,21 @@ export class AnnuncioPage implements OnInit {
   logout() {
     this.authService.logoutUser();
     this.router.navigate(['home']);
+  }
+
+  paginaRegistrazione() {
+    this.router.navigate(['registrazione']);
+  }
+
+  paginaIncontri() {
+    this.router.navigate(['incontro']);
+  }
+
+  approvaDomanda() {
+    this.router.navigate(['approvazione']);
+  }
+
+  caricaDocumenti() {
+    this.router.navigate(['carica-documenti']);
   }
 }

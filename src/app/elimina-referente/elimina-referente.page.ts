@@ -96,4 +96,20 @@ export class EliminaReferentePage implements OnInit {
     this.authService.logoutUser();
     this.router.navigate(['home']);
   }
+
+  paginaRegistrazione() {
+    this.router.navigate(['registrazione']);
+  }
+
+  paginaIncontri() {
+    this.router.navigate(['incontro']);
+  }
+
+  approvaDomanda() {
+    this.router.navigate(['approvazione']);
+  }
+
+  caricaDocumenti() {
+    this.router.navigate(['carica-documenti']);
+  }
 }

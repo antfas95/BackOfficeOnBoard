@@ -16,8 +16,17 @@
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
     <ion-fab-list>
-      <ion-fab-button color="light" (click)="otherFunction()">
-        <ion-icon name="cog"></ion-icon>
+      <ion-fab-button color="light" (click)="paginaRegistrazione()">
+        <ion-icon name="person-add"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="paginaIncontri()">
+        <ion-icon name="clock"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="approvaDomanda()">
+        <ion-icon name="filing"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button color="light" (click)="caricaDocumenti()">
+        <ion-icon name="archive"></ion-icon>
       </ion-fab-button>
       <ion-fab-button color="light" (click)="logout()">
         <ion-icon name="log-out"></ion-icon>
@@ -98,9 +107,18 @@
         <ion-col col-md-5></ion-col>
       </ion-row>
     </ion-grid>
-    <div *ngFor = "let inc of incontri | async">
-      <p>Indirizzo: {{inc.indirizzo}}</p>
-      <p>Referente: {{inc.emailReferente}}</p>
-      <p>Utente: {{inc.emailUtente}}</p>
-    </div>
+    <ion-card class = "secondacard" text-center *ngFor="let item of incontri | async">
+      <ion-card-header>
+        <ion-card-title color = "secondary">
+         {{ item.data }} {{item.ora}}
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <p>Referente: {{item.emailReferente}}</p>
+        <p>Utente: {{item.emailUtente}}</p>
+        <p>Indirizzo : {{ item.indirizzo }}</p>
+        <ion-button (click)= "eliminaIncontro(item)" color = secondary>Elimina annuncio</ion-button>
+      </ion-card-content>
+    </ion-card>
 </ion-content>

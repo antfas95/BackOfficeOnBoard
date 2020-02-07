@@ -88,6 +88,31 @@ export class IncontroService {
     return this.itemsReferenti;
   }
 
+  getIncontriXData(email: string) {
+    this.itemsReferenti = null;
+    console.log ('Mi trovo nel metodo che mi ritorna gli incontri associatiii' + this.itemsReferenti);
+    this.dataGenerata = new Date ();
+    this.chiaveRicerca = this.dataGenerata.toISOString().substring(0, 10);
+    console.log ('Mi trovo nel metodo con i seguenti valori da ritornare: ' + email);
+    this.itemsReferenti = this.afs.collection('referenti').doc(email).collection('incontro', ref => ref.orderBy('data', 'desc')).snapshotChanges().pipe( map (changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Incontro;
+        data.id = a.payload.doc.id;
+        console.log('Ecco il valore della a che mi serve: ' + data.data.toString());
+        return data;
+      });
+    })
+  );
+    return this.itemsReferenti;
+  }
+
+  eliminaIncontro(incontro: Incontro, emailReferente: string, emailUtente: string) {
+    //const a = this.itemsCollections.add(incontro);
+    console.log ("id incontro: " + incontro.id);
+    this.itemsCollectionsReferenti.doc(emailReferente).collection('incontro').doc(incontro.id).delete();
+    this.itemsCollections.doc(emailUtente).collection('incontro').doc(incontro.id).delete();
+  }
+
   addIncontro(incontro: Incontro, emailAuth: string) {
     console.log ('Mi trovo nel metodo con i seguenti valori, referente: ' + incontro.emailReferente + 'utente: ' + incontro.emailUtente + 'indirizzo: ' + incontro.indirizzo + 'data: ' + incontro.data + 'ora' + incontro.ora);
     //const a = this.itemsCollections.add(incontro);

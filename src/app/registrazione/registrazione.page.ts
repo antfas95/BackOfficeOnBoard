@@ -6,6 +6,8 @@ import { NavController } from '@ionic/angular';
 import { UtenteService } from '../services/utente.service';
 import { Utente } from '../models/Utente';
 import { AlertController } from '@ionic/angular';
+import { SMS } from '@ionic-native/sms/ngx';
+import { EmailComposer } from '@ionic-native/email-composer/ngx';
 
 @Component({
   selector: 'app-registrazione',
@@ -14,10 +16,10 @@ import { AlertController } from '@ionic/angular';
 })
 export class RegistrazionePage implements OnInit {
 
-  // Data che mi serve come valore che viene prelevato all'interno della pagina
+  //Data che mi serve come valore che viene prelevato all'interno della pagina
   cittanascita: string;
   datanascita: Date;
-  // Data di oggi
+  //Data di oggi
   mydate = new Date().toISOString();
 
   utente: Utente = {
@@ -34,51 +36,49 @@ export class RegistrazionePage implements OnInit {
     caricamenti: false,
   };
 
-  // Variabili utili per l'autentcicazione
-  // tslint:disable-next-line: variable-name
+  //Variabili utili per l'autentcicazione
   validations_form: FormGroup;
-  errorMessage = '';
-  successMessage = '';
+  errorMessage: string = '';
+  successMessage: string = '';
 
-  // tslint:disable-next-line: variable-name
   validation_messages = {
-    email: [
+    'email': [
       { type: 'required', message: 'Email è un campo obbligatorio' },
       { type: 'pattern', message: 'Inserisci una mail valida' }
     ],
-    password: [
+    'password': [
       { type: 'required', message: 'Password è un campo obbligatorio' },
       { type: 'minlength', message: 'La password deve essere di almeno 5 caratteri lunga' }
     ],
-    password2: [
+    'password2': [
       { type: 'required', message: 'Password è un campo obbligatorio' },
       { type: 'minlength', message: 'La password deve essere di almeno 5 caratteri lunga' }
     ],
-    nome : [
+    'nome' : [
       { type: 'required', message: 'Il nome è un campo obbligatorio' },
       { type: 'minlenght', message: 'Il nome deve essere di almeno 3 caratteri' }
     ],
-    cognome : [
+    'cognome' : [
       { type: 'required', message: 'Il cognome è un campo obbligatorio' },
       { type: 'minlenght', message: 'Il cognome deve essere di almeno 3 caratteri' }
     ],
-    nascita: [
+    'nascita': [
       { type: 'required', message: 'La città è un campo obbligatorio' },
     ],
-    codfiscale: [
+    'codfiscale': [
       { type: 'required', message: 'Codice Fiscale è un campo obbligatorio' },
       { type: 'pattern', message: 'Inserisci un codice fiscale valido' }
     ],
-    citta: [
+    'citta': [
       { type: 'required', message: 'La città è un campo obbligatorio' },
     ],
-    residenza: [
+    'residenza': [
       { type: 'required', message: 'La residenza è un campo obbligatorio' },
     ],
-    sesso: [
+    'sesso': [
       { type: 'required', message: 'Il sesso è un campo obbligatorio' },
     ],
-    indirizzo: [
+    'indirizzo': [
       { type: 'required', message: 'Indirizzo è un campo obbligatorio' },
     ],
   };
@@ -89,10 +89,10 @@ export class RegistrazionePage implements OnInit {
   password1: string;
 
   // tslint:disable-next-line: max-line-length
-  constructor(public alertCtrl: AlertController, public router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder, public itemService: UtenteService) {
+  constructor(private emailComposer: EmailComposer, private sms: SMS, public alertCtrl: AlertController, public router: Router, private navCtrl: NavController, private authService: AuthenticationService, private formBuilder: FormBuilder, public itemService: UtenteService) {
     this.user = this.authService.userDetails();
 
-
+    
     if (this.user) {
         // User is signed in.
         console.log ('Utente loggato');
@@ -100,18 +100,18 @@ export class RegistrazionePage implements OnInit {
       } else {
         console.log ('Utente non loggato ');
         this.reload();
-        // this.authService.logoutUser();
-        // this.router.navigate(['home']);
+        //this.authService.logoutUser();
+        //this.router.navigate(['home']);
         // No user is signed in.
       }
-    // this.reload();
+    //this.reload();
    }
 
    reload() {
     this.authService.logoutUser();
     this.router.navigate(['home']);
    }
-
+   
   ngOnInit() {
     this.validations_form = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
@@ -163,7 +163,6 @@ export class RegistrazionePage implements OnInit {
   addCliente() {
     this.utente.cittàNascita = this.cittanascita;
     this.utente.datanascita = this.datanascita.toString().substring(0, 10);
-    // tslint:disable-next-line: max-line-length
     console.log ('Ecco tutte le info: ' + this.utente.nome + this.utente.cognome + this.utente.email + this.utente.codice_fiscale + this.utente.indirizzo + this.utente.sesso + this.utente.cittàNascita);
     this.itemService.addCliente(this.utente);
     this.utente.nome = '';
@@ -180,24 +179,31 @@ export class RegistrazionePage implements OnInit {
   tryRegister(value) {
     this.errorMessage = '';
     this.successMessage = 'Il tuo account è stato correttamente creato prova a loggarti';
-    // this.utente.datanascita = this.datanascita.toString().substring(0, 10);
+    //this.utente.datanascita = this.datanascita.toString().substring(0, 10);
     this.utente.cittàNascita = this.cittanascita;
     if (this.password === this.password1) {
       this.itemService.addCliente(this.utente);
       // Send a text message using default options
+      /*
       console.log ('Invio il messaggio');
-      // this.sms.send('+393383177453', 'Hello world!');
+      this.sms.send('+393383177453', 'Hello world!');
+      */
 
-      const email = {
-        to: 'max@mustermann.de',
-        cc: 'erika@mustermann.de',
-        bcc: ['john@doe.com', 'jane@doe.com'],
-        subject: 'Cordova Icons',
-        body: 'How are you? Nice greetings from Leipzig',
+       let email = {
+        to: this.utente.email,
+        //cc: 'erika@mustermann.de',
+        //bcc: ['john@doe.com', 'jane@doe.com'],
+        subject: 'Registrazione avvenuta con successo',
+        body: 'Ciao ' + this.utente.nome + 'Benvenuto in Sella' + 
+        "\nEcco le tue creadenziali per l'applicazione dedicata, con la quale potrai interagire facilmente e da casa con noi \n" + 
+        'Username: ' + this.utente.email + 
+        '\nPassword: ' + this.password + 
+        '\nCordiali saluti,' + 
+        '\\nBanca Sella, gruppo Biella.',
         isHtml: true
-      };
+      }
       // Send a text message using default options
-      // this.emailComposer.open(email);
+      this.emailComposer.open(email);
       this.utente.nome = '';
       this.utente.cognome = '';
       this.utente.indirizzo = '';
@@ -246,11 +252,11 @@ export class RegistrazionePage implements OnInit {
 
   dataChanged(date) {
     this.utente.datanascita = this.datanascita.toString();
-    console.log ('Ecco il valore associato all\'utente: ' + this.utente.datanascita);
-    // E' esattamente viceversa la prima console mostra la data inserita la seconda invece quella odierna, incluso orario
-    console.log('Questa in teoria dovrebbe essere la data di oggi' + date.detail.value);
-    console.log('Questa è la data inserita da me: ' + this.mydate);
-    console.log ('Valore associato alla mia data di nascita: ' + this.datanascita.toString());
+    console.log ("Ecco il valore associato all'utente: " + this.utente.datanascita);
+    //E' esattamente viceversa la prima console mostra la data inserita la seconda invece quella odierna, incluso orario
+    console.log("Questa in teoria dovrebbe essere la data di oggi" + date.detail.value);
+    console.log("Questa è la data inserita da me: " + this.mydate);
+    console.log ("Valore associato alla mia data di nascita: " + this.datanascita.toString());
   }
 
   async presentAlert(message: string) {
@@ -278,5 +284,21 @@ export class RegistrazionePage implements OnInit {
   logout() {
     this.authService.logoutUser();
     this.router.navigate (['home']);
+  }
+
+  paginaRegistrazione() {
+    this.router.navigate(['registrazione']);
+  }
+
+  paginaIncontri() {
+    this.router.navigate(['incontro']);
+  }
+
+  approvaDomanda() {
+    this.router.navigate(['approvazione']);
+  }
+
+  caricaDocumenti() {
+    this.router.navigate(['carica-documenti']);
   }
 }

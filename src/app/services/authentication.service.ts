@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import * as firebase from 'firebase/app';
+import { SelectuserService } from '../services/selectuser.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  constructor() { }
+  constructor(public selezionato: SelectuserService) { }
 
   registerUser(value) {
     return new Promise<any>((resolve, reject) => {
@@ -33,6 +34,8 @@ export class AuthenticationService {
         firebase.auth().signOut()
         .then(() => {
           console.log('LOG Out');
+          this.selezionato.setUtente('');
+          this.selezionato.setReferenteLoggato('');
           resolve();
         }).catch((error) => {
           reject();

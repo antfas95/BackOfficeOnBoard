@@ -7,6 +7,7 @@ import { Referente } from '../models/Referente';
 import { AuthenticationService } from '../services/authentication.service';
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
+import { SelectuserService } from '../services/selectuser.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class ReferenteService {
   presenza: boolean;
   errorMessage: string = '';
 
-  constructor(public alertCtrl: AlertController, private router: Router, public afs: AngularFirestore, public afDatabase: AngularFireDatabase, public authService: AuthenticationService) {
+  constructor(public selezionato: SelectuserService, public alertCtrl: AlertController, private router: Router, public afs: AngularFirestore, public afDatabase: AngularFireDatabase, public authService: AuthenticationService) {
     console.log('Eccomi mi trovo qui nel costruttore di colui che fornisce il servizio per i referenti');
     this.itemsCollections = afs.collection<Referente>('referenti');
     //this.items = this.afs.collection('users').valueChanges();
@@ -79,6 +80,7 @@ export class ReferenteService {
           console.log(res);
           this.errorMessage = '';
           console.log('login success: ' + email);
+          this.selezionato.setReferenteLoggato(email);
           this.router.navigate(['dashboard-def']);
     }, err => {
       this.presentAlert ('Log in non avvenuta con successo, inserisci le giuste credenziali');
