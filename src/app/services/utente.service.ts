@@ -20,9 +20,9 @@ export class UtenteService {
   itemsSelct: Observable<Utente[]>;
 
   constructor(public afs: AngularFirestore, public afDatabase: AngularFireDatabase) {
-    this.itemsCollections = afs.collection<Utente>('users');
+    this.itemsCollections = afs.collection<Utente>('users', );
     //this.items = this.afs.collection('users').valueChanges();
-    this.items = this.afs.collection('users').snapshotChanges().pipe( map (changes => {
+    this.items = this.afs.collection('users',  ref => { return ref.orderBy('cognome')}).snapshotChanges().pipe( map (changes => {
       return changes.map(a => {
         const data = a.payload.doc.data() as Utente;
         data.id = a.payload.doc.id;
