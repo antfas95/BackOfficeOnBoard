@@ -17,6 +17,7 @@ const routes: Routes = [
   { path: 'elimina-referente', loadChildren: './elimina-referente/elimina-referente.module#EliminaReferentePageModule' },
   { path: 'prova-tutorial', loadChildren: './prova-tutorial/prova-tutorial.module#ProvaTutorialPageModule' },
   { path: 'app-documents', loadChildren: './documents/documents.module#DocumentsPageModule' },
+  { path: 'list-user', loadChildren: './list-user/list-user.module#ListUserPageModule' },
 ];
 
 @NgModule({

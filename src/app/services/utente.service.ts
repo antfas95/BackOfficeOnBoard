@@ -75,6 +75,18 @@ export class UtenteService {
     return this.itemsSelct;
   }
 
+  ritornoUtenti() {
+    this.itemsSelct = this.afs.collection('users', ref => { return ref.orderBy('nome')}).snapshotChanges().pipe( map (changes => {
+      return changes.map(a => {
+        const data = a.payload.doc.data() as Utente;
+        data.id = a.payload.doc.id;
+        return data;
+      });
+    })
+  );
+    return this.itemsSelct;
+  }
+
   eliminaUtente(utente: Utente) {
     console.log ('Elimino utente: ' + utente.id);
     this.itemsCollections.doc(utente.id).delete();

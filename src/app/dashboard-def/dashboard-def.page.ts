@@ -175,7 +175,9 @@ export class DashboardDefPage implements OnInit {
   }
 
   altreFunzioni() {
-    this.presentAlert ('Funzione ancora non implementata');
+    //this.presentAlert ('Funzione ancora non implementata');
+    this.router.navigate(['list-user']);
+    this.selezionato.setUtente('');
   }
 
   async presentAlert(message: string) {
@@ -188,7 +190,8 @@ export class DashboardDefPage implements OnInit {
   }
 
   otherFunction() {
-    this.presentAlert ('Funzione ancora non implementata');
+    //this.presentAlert ('Funzione ancora non implementata');
+    this.router.navigate(['list-user']);
     this.selezionato.setUtente('');
   }
 
